@@ -6,16 +6,19 @@ This repository contains the paper homepage and interactive trajectory demo for 
 
 - `index.html`, `home.css`, `home.js`: paper homepage, model-result comparison and citation.
 - `demo/index.html`: interactive home-repair trajectory viewer.
-- `app.js`, `observations.js`, `style.css`: the retained viewer implementation. The Demo sets its base URL to the repository root, sharing the existing data, images and fonts.
+- `app.js`, `observations.js`, `style.css`: trajectory viewer.
 - `data/home_repair.json`, `data/catalog.json`, `assets/*.png`: retained trajectory data and images.
 - `data/dynamicworld-results.json`: Table 3 data copied from the code repository.
-- `assets/figures/`: paper figures. The arXiv button is explicitly marked “Coming soon”; no manuscript PDF is included.
+- `assets/figures/`: paper figures.
 - `data/original-export-manifest.json`: original trajectory export provenance.
 - `manifest.json`: retained trajectory provenance plus current presentation-file hashes.
 
-All web presentation lives in this repository. The Android Apps, Agent runtime, task suite and evaluator stay in the code repository. The homepage links to those maintained setup and evaluation guides.
+The Android apps, agent runtime, task suite, and evaluator are available in the [code repository](https://github.com/FreedomIntelligence/OSNativeAgent).
 
-Existing `#scene=...` links at the site root redirect to `demo/` and retain the complete trajectory hash. Standard homepage anchors such as `#results` stay on the homepage. The Demo and original images share one deployment and require no backend or model calls.
+<!-- The demo sets its base URL to the repository root to share data, images,
+and fonts. Existing root #scene=... links redirect to demo/ and retain the full
+trajectory hash. Standard homepage anchors stay on the homepage. The viewer
+uses saved data without a backend or model calls. -->
 
 ## Local preview
 
@@ -31,7 +34,10 @@ After updating site files, run:
 python3 scripts/update-manifest.py
 ```
 
-This verifies that the original trajectory JSON and 278 original PNGs have not changed, then refreshes presentation hashes. It does not modify trajectory data or scores, call a model or operate a phone. Refresh `data/dynamicworld-results.json` from the code repository when changing published result data; update the static fallback table in `index.html` at the same time.
+This checks the original trajectory assets and refreshes presentation hashes.
+
+<!-- When updating published results, copy data/dynamicworld-results.json from
+the code repository and update the static fallback table in index.html. -->
 
 ## Browser checks
 
@@ -39,6 +45,7 @@ Install Playwright in a development environment and make Chromium available. Run
 
 ## Deployment
 
-The existing GitHub Pages repository is the destination for both pages. Preserve its configured Pages branch and root directory; `.nojekyll` keeps this a buildless static site. Publishing these changes updates the homepage and adds `demo/` together. No additional website repository is required.
+Serve the repository root with GitHub Pages. The homepage and `demo/` share one deployment; `.nojekyll` keeps the site buildless.
 
-When an arXiv identifier is available, replace the disabled arXiv placeholder in `index.html` with the real abstract-page link, then update the citation in both repositories. No arXiv identifier or paper URL is fabricated.
+<!-- When the arXiv identifier is available, replace the disabled placeholder in
+index.html with the abstract-page link and update the citation in both repositories. -->

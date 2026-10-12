@@ -1512,7 +1512,7 @@
     },
     {
       "path": "home.css",
-      "sha256": "3faad9a26d2182fe6c5c026daca85b2b581b6c4f94d1592b6b77506d73ed2210"
+      "sha256": "d54254ec5041ba9059c46ccfa419f0b9e44a05239528c203f86146922db9e73b"
     },
     {
       "path": "home.js",
@@ -1520,7 +1520,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "c01973f04fef6ef5ea1e5033757e448517519fc60537d533ae58f7890a74b6ca"
+      "sha256": "cc1f4bdd35a6364449caa15cfbb3177d1e3e9295ac0ae279c8a216d7bbe9a3ad"
     },
     {
       "path": "observations.js",
