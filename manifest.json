@@ -1468,15 +1468,35 @@
     },
     {
       "path": "app.js",
-      "sha256": "380cfabaac84ecab9c9b3fb504a5ed5a422ab762da02f06cf0276e5db6ef432e"
+      "sha256": "117f73422a1abe35f8d768e732e22a1aab16ac89f5dca0bcf8721fc5cb417046"
+    },
+    {
+      "path": "assets/figures/dynamicworld-benchmark.png",
+      "sha256": "4bfb63e0999b79e725cc1195328c0750547758e264c2f3d790e9b2ee8a9dffa2"
+    },
+    {
+      "path": "assets/figures/os-native-framework.png",
+      "sha256": "59a781851a99a7cf1b3e1443b95dc844235c3649e7304470ed0275c1c98010a8"
     },
     {
       "path": "data/catalog.json",
       "sha256": "087965595c9877d11773b546f87af3c4e3faf4f2442ebe918c6f527fa8187b74"
     },
     {
+      "path": "data/dynamicworld-results.json",
+      "sha256": "d202a442269cb879c382de9f6f6bb99d2685149940f6bf89cbeea0dd8cb99337"
+    },
+    {
       "path": "data/home_repair.json",
       "sha256": "f37403b795f89a859b1dbadb044ca880f13daecb4b1673e743c45d9975f3b053"
+    },
+    {
+      "path": "data/original-export-manifest.json",
+      "sha256": "e316dd4dc07b6717719740c138935e3b550f177f3c7dbe5fe508b2305a8fb827"
+    },
+    {
+      "path": "demo/index.html",
+      "sha256": "8cce40bb7f211460d385775f965dd5c920fcbc97b7f5e0fb2f4afb124f287889"
     },
     {
       "path": "fonts/OFL.txt",
@@ -1491,8 +1511,16 @@
       "sha256": "42d5ff4159c42b718dfefdd689fc548cca67d23419aa1a575c82c54b9a805402"
     },
     {
+      "path": "home.css",
+      "sha256": "3faad9a26d2182fe6c5c026daca85b2b581b6c4f94d1592b6b77506d73ed2210"
+    },
+    {
+      "path": "home.js",
+      "sha256": "a447940e541afcb447a38c1dbf26636167f35311ae182fe37df3f0d5f1383410"
+    },
+    {
       "path": "index.html",
-      "sha256": "d2dbf2965f3de3351fd4b099b0e6a47fc6bfbf2c5c207831b2a1b5d7327a82e1"
+      "sha256": "c01973f04fef6ef5ea1e5033757e448517519fc60537d533ae58f7890a74b6ca"
     },
     {
       "path": "observations.js",
@@ -1506,6 +1534,8 @@
   "site_build": {
     "model_calls": 0,
     "phone_actions": 0,
-    "source_manifest_sha256": "cc803e4fd28c173db8c1da06847b6ee87f0a24eee7d734a120a25c03398f2434"
+    "presentation": "paper homepage with integrated trajectory demo",
+    "source_export_manifest": "data/original-export-manifest.json",
+    "source_export_manifest_sha256": "e316dd4dc07b6717719740c138935e3b550f177f3c7dbe5fe508b2305a8fb827"
   }
 }

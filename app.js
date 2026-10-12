@@ -98,7 +98,7 @@ function syncHash() {
   const params = new URLSearchParams({scene: state.data.id, stage: state.stage, filter: state.filter,
     n: String(state.positions.native), c: String(state.positions.claw)});
   if (state.task !== "all") params.set("task", state.task);
-  history.replaceState(null, "", `#${params}`);
+  history.replaceState(null, "", `${location.pathname}${location.search}#${params}`);
 }
 function stageLabel(node) {
   if (node.display_title) return node.display_title;
@@ -374,6 +374,7 @@ function renderAbout() {
   const root = $("#about"); root.replaceChildren();
   root.append(el("p", "", "任务标签：实线表示原始委托或会话可确认的归属；虚线表示相关事件上下文，不代表独占归属。AppFunction 可改变 App 状态而不切换前台，结果以读回记录为准。"));
   root.append(el("p", "", "按保存的动作顺序执行，随时间线重现消息与设备变化，再采集每步手机画面。回放使用已有决策，不重新调用模型；结果沿用原运行。"));
+  for (const note of state.data.notes || []) root.append(el("p", "", note));
   const columns = el("div", "provenance");
   for (const key of ["native", "claw"]) {
     const lane = state.data.lanes[key], column = el("div");
@@ -419,7 +420,7 @@ async function loadCase(id, params = null) {
     const safePosition = v => /^\d+$/.test(v || "") ? Math.min(Number(v), 1000000) : 0;
     state.positions = {native: safePosition(params?.get("n")), claw: safePosition(params?.get("c"))};
     $("#case-title").textContent = data.title;
-    document.title = `${data.title} · Trajectory Studio`;
+    document.title = `${data.title} · OS-native Agents Demo`;
     document.querySelectorAll(".case-button").forEach(b => { b.classList.toggle("active", b.dataset.id === id); b.setAttribute("aria-pressed", String(b.dataset.id === id)); });
     $("#workspace").hidden = false;
     renderStages(); renderLane("native"); renderLane("claw"); renderAbout(); renderScores(); syncHash();
