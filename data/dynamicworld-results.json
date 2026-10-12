@@ -1,5 +1,5 @@
 {
-  "source": "OS-native Agents: Managing User Tasks in the Dynamic Mobile World, Table 3",
+  "source": "OS-native Agents: Managing User Tasks in the Dynamic Mobile World, Tables 3–5",
   "task_count": 88,
   "scenario_count": 16,
   "app_count": 18,
@@ -15,24 +15,45 @@
     "GPT-5.4": {
       "OS-native": {
         "success": 76.1,
-        "calls_per_scenario": 121.50,
+        "calls_per_scenario": 121.5,
         "reported_tokens_per_scenario": "2.81M",
         "user_requests_per_scenario": 3.13,
-        "challenge_success": [62.5, 61.9, 81.0, 86.4, 72.7, 100.0]
+        "challenge_success": [
+          62.5,
+          61.9,
+          81.0,
+          86.4,
+          72.7,
+          100.0
+        ]
       },
       "MobileClaw": {
         "success": 40.9,
         "calls_per_scenario": 289.56,
         "reported_tokens_per_scenario": "3.42M",
         "user_requests_per_scenario": 2.44,
-        "challenge_success": [25.0, 33.3, 52.4, 50.0, 36.4, 20.0]
+        "challenge_success": [
+          25.0,
+          33.3,
+          52.4,
+          50.0,
+          36.4,
+          20.0
+        ]
       },
       "MobileWorld": {
         "success": 23.9,
         "calls_per_scenario": 102.38,
         "reported_tokens_per_scenario": "1.53M",
         "user_requests_per_scenario": 1.44,
-        "challenge_success": [37.5, 19.0, 28.6, 13.6, 27.3, 40.0]
+        "challenge_success": [
+          37.5,
+          19.0,
+          28.6,
+          13.6,
+          27.3,
+          40.0
+        ]
       }
     },
     "GPT-5.4-mini": {
@@ -40,23 +61,116 @@
         "success": 36.4,
         "calls_per_scenario": 100.44,
         "reported_tokens_per_scenario": "2.79M",
-        "user_requests_per_scenario": 3.00,
-        "challenge_success": [50.0, 19.0, 47.6, 36.4, 18.2, 80.0]
+        "user_requests_per_scenario": 3.0,
+        "challenge_success": [
+          50.0,
+          19.0,
+          47.6,
+          36.4,
+          18.2,
+          80.0
+        ]
       },
       "MobileClaw": {
         "success": 17.0,
         "calls_per_scenario": 191.75,
         "reported_tokens_per_scenario": "1.57M",
         "user_requests_per_scenario": 2.63,
-        "challenge_success": [12.5, 9.5, 23.8, 22.7, 9.1, 20.0]
+        "challenge_success": [
+          12.5,
+          9.5,
+          23.8,
+          22.7,
+          9.1,
+          20.0
+        ]
       },
       "MobileWorld": {
         "success": 4.5,
         "calls_per_scenario": 67.13,
         "reported_tokens_per_scenario": "0.83M",
         "user_requests_per_scenario": 1.25,
-        "challenge_success": [12.5, 0.0, 4.8, 0.0, 9.1, 20.0]
+        "challenge_success": [
+          12.5,
+          0.0,
+          4.8,
+          0.0,
+          9.1,
+          20.0
+        ]
       }
     }
+  },
+  "event_success": {
+    "source_table": 4,
+    "model": "GPT-5.4",
+    "metric": "Full-task success (%)",
+    "groups": [
+      {
+        "events": "0",
+        "tasks": 19,
+        "OS-native": 78.9,
+        "MobileClaw": 52.6,
+        "MobileWorld": 52.6
+      },
+      {
+        "events": "1",
+        "tasks": 22,
+        "OS-native": 77.3,
+        "MobileClaw": 36.4,
+        "MobileWorld": 18.2
+      },
+      {
+        "events": "2",
+        "tasks": 23,
+        "OS-native": 82.6,
+        "MobileClaw": 47.8,
+        "MobileWorld": 17.4
+      },
+      {
+        "events": "≥3",
+        "tasks": 24,
+        "OS-native": 66.7,
+        "MobileClaw": 29.2,
+        "MobileWorld": 12.5
+      }
+    ],
+    "definition": "Task-related World timeline nodes after delegation through scenario end, including post-closure events testing stopping or preservation. Clock-only nodes are excluded. Each task appears in exactly one group."
+  },
+  "continuation_success": {
+    "source_table": 5,
+    "task_count": 78,
+    "metric": "Number of successful tasks",
+    "models": {
+      "GPT-5.4": {
+        "OS-native": {
+          "initial": 68,
+          "full": 60
+        },
+        "MobileClaw": {
+          "initial": 43,
+          "full": 33
+        },
+        "MobileWorld": {
+          "initial": 37,
+          "full": 19
+        }
+      },
+      "GPT-5.4-mini": {
+        "OS-native": {
+          "initial": 47,
+          "full": 27
+        },
+        "MobileClaw": {
+          "initial": 25,
+          "full": 12
+        },
+        "MobileWorld": {
+          "initial": 12,
+          "full": 4
+        }
+      }
+    },
+    "definition": "The same 78 tasks require an initial delivery followed by revision, triggered continuation, or preservation. Initial success satisfies the original first-delivery window; full success also satisfies all subsequent requirements."
   }
 }

@@ -19,17 +19,21 @@ if (new URLSearchParams(location.hash.slice(1)).has('scene')) {
       tab.tabIndex = active ? 0 : -1;
     });
     document.querySelector('#result-panel').setAttribute('aria-labelledby', tabs.find(tab => tab.dataset.model === model).id);
-    document.querySelectorAll('.bar-row').forEach((row, i) => {
-      row.querySelector('.bar').style.setProperty('--score', `${rows[i].success}%`);
-      row.querySelector('.bar-value').textContent = `${rows[i].success.toFixed(1)}%`;
+    document.querySelectorAll('#challenge-rows tr').forEach((row, i) => {
+      const scores = [rows[i].success, ...rows[i].challenge_success];
+      row.querySelectorAll('td').forEach((cell, column) => {
+        cell.querySelector('.score-number').textContent = scores[column].toFixed(1);
+        cell.querySelector('.score-track i').style.width = `${scores[column]}%`;
+      });
     });
-    document.querySelector('.chart').setAttribute('aria-label', `${model} task success: ${rows.map(row => `${row.name} ${row.success}%`).join(', ')}`);
     const body = document.querySelector('#result-rows');
     body.replaceChildren(...rows.map(row => {
       const tr = document.createElement('tr');
       if (row.name === systems[0]) tr.className = 'native';
-      [row.name, `${row.success.toFixed(1)}%`, row.calls_per_scenario.toFixed(2), row.reported_tokens_per_scenario, row.user_requests_per_scenario.toFixed(2)].forEach(value => {
-        const td = document.createElement('td'); td.textContent = value; tr.append(td);
+      [row.name, row.calls_per_scenario.toFixed(2), row.reported_tokens_per_scenario, row.user_requests_per_scenario.toFixed(2)].forEach((value, i) => {
+        const cell = document.createElement(i === 0 ? 'th' : 'td');
+        if (i === 0) cell.scope = 'row';
+        cell.textContent = value; tr.append(cell);
       });
       return tr;
     }));
@@ -51,7 +55,7 @@ if (new URLSearchParams(location.hash.slice(1)).has('scene')) {
   }).then(data => { results = data; render(selected); }).catch(() => {
     const error = document.querySelector('#result-error');
     error.hidden = false;
-    error.textContent = 'The interactive result data could not load. The GPT-5.4 table above remains available; use the result-data link to inspect the source.';
+    error.textContent = 'The interactive result data could not load. The GPT-5.4 results and Tables 4–5 remain available below; use the result-data link to inspect the source.';
     tabs.forEach(tab => { tab.disabled = true; });
   });
   document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {

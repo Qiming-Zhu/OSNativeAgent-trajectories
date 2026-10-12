@@ -8,8 +8,9 @@ This repository contains the paper homepage and interactive trajectory demo for 
 - `demo/index.html`: interactive home-repair trajectory viewer.
 - `app.js`, `observations.js`, `style.css`: trajectory viewer.
 - `data/home_repair.json`, `data/catalog.json`, `assets/*.png`: retained trajectory data and images.
-- `data/dynamicworld-results.json`: Table 3 data copied from the code repository.
-- `assets/figures/`: paper figures.
+- `data/dynamicworld-results.json`: Tables 3–5 data, shared with the code repository.
+- `assets/figures/`: paper figures and screenshots of the trajectory viewer, shared with the code repository.
+- `data/showcase.json`: selected viewer steps and screenshot provenance.
 - `data/original-export-manifest.json`: original trajectory export provenance.
 - `manifest.json`: retained trajectory provenance plus current presentation-file hashes.
 
@@ -37,7 +38,7 @@ python3 scripts/update-manifest.py
 This checks the original trajectory assets and refreshes presentation hashes.
 
 <!-- When updating published results, copy data/dynamicworld-results.json from
-the code repository and update the static fallback table in index.html. -->
+the code repository and update the static fallback tables in index.html. -->
 
 ## Browser checks
 

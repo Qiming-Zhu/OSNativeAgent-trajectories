@@ -1471,6 +1471,30 @@
       "sha256": "117f73422a1abe35f8d768e732e22a1aab16ac89f5dca0bcf8721fc5cb417046"
     },
     {
+      "path": "assets/figures/demo-t031.png",
+      "sha256": "cd4f58a71bd92f665e3069448b7f07a1a5419ec5ad9e5a3063e921559d6967fd"
+    },
+    {
+      "path": "assets/figures/demo-t032.png",
+      "sha256": "4625852ded36e766e21598b666c1846db5d88bcee9378e43543a5845c104b82e"
+    },
+    {
+      "path": "assets/figures/demo-t033.png",
+      "sha256": "a7a21f9c1b8d45dcedcbfe33a85f45c6bf4eca5c9a007fe20edb63af9fed4c6c"
+    },
+    {
+      "path": "assets/figures/demo-t034.png",
+      "sha256": "7d323f62cc618c12737df84589da3dcb2ee2d69d107e85a1248174ab0037d796"
+    },
+    {
+      "path": "assets/figures/demo-t035.png",
+      "sha256": "6432c7ddc42e203283f71abf95e91fd2ddd872965e672fc467f01e7108b00b39"
+    },
+    {
+      "path": "assets/figures/demo-t036.png",
+      "sha256": "0857b9390271da405e047d218714f1e1cafadb7fd629a98565d6a42cc606deca"
+    },
+    {
       "path": "assets/figures/dynamicworld-benchmark.png",
       "sha256": "4bfb63e0999b79e725cc1195328c0750547758e264c2f3d790e9b2ee8a9dffa2"
     },
@@ -1484,7 +1508,7 @@
     },
     {
       "path": "data/dynamicworld-results.json",
-      "sha256": "d202a442269cb879c382de9f6f6bb99d2685149940f6bf89cbeea0dd8cb99337"
+      "sha256": "d095edc35b4914027625bc556823af140836236714f1b478d89931e7971eb337"
     },
     {
       "path": "data/home_repair.json",
@@ -1493,6 +1517,10 @@
     {
       "path": "data/original-export-manifest.json",
       "sha256": "e316dd4dc07b6717719740c138935e3b550f177f3c7dbe5fe508b2305a8fb827"
+    },
+    {
+      "path": "data/showcase.json",
+      "sha256": "10a9c45da55399be29745d23078534911e58985cfd963b6bf0c064619640068a"
     },
     {
       "path": "demo/index.html",
@@ -1512,15 +1540,15 @@
     },
     {
       "path": "home.css",
-      "sha256": "d54254ec5041ba9059c46ccfa419f0b9e44a05239528c203f86146922db9e73b"
+      "sha256": "493f9488f314cac17c2b0c5f1f1fc7a3d8e95f83a0eaa5e46f721cb9cb7c7356"
     },
     {
       "path": "home.js",
-      "sha256": "a447940e541afcb447a38c1dbf26636167f35311ae182fe37df3f0d5f1383410"
+      "sha256": "6d7e4b855949ea9eedec498d1f5931e215d2c3149691b636769ce355d2467bfd"
     },
     {
       "path": "index.html",
-      "sha256": "cc1f4bdd35a6364449caa15cfbb3177d1e3e9295ac0ae279c8a216d7bbe9a3ad"
+      "sha256": "c3b4646df1c830a1f05c078ba7e9a2ae119c4f2a1868fc17bddb4792d23640e4"
     },
     {
       "path": "observations.js",

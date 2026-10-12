@@ -24,7 +24,7 @@ const output = path.join(__dirname, '..', 'preview');
     assert.match(await page.title(), /OS-native Agents/);
     assert.equal(await page.getByRole('button', { name: 'arXiv paper link coming soon' }).isDisabled(), true);
     assert.equal(await page.locator('a[href*="paper.pdf"]').count(), 0);
-    await page.locator('#citation').scrollIntoViewIfNeeded();
+    for (const image of await page.locator('main img').all()) await image.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => [...document.querySelectorAll('main img')].every(image => image.complete && image.naturalWidth > 0));
     await page.evaluate(() => scrollTo(0, 0));
     await page.screenshot({ path: path.join(output, 'project-desktop.png'), fullPage: true });
@@ -32,9 +32,20 @@ const output = path.join(__dirname, '..', 'preview');
     for (const model of ['GPT-5.4-mini', 'GPT-5.4']) {
       await page.getByRole('tab', { name: model, exact: true }).click();
       const expected = results.models[model];
-      assert.equal(await page.locator('.bar-value').first().textContent(), `${expected['OS-native'].success.toFixed(1)}%`);
+      assert.equal(await page.locator('#challenge-rows .overall .score-number').first().textContent(), expected['OS-native'].success.toFixed(1));
       assert.equal(await page.locator('#result-rows tr').count(), 3);
       assert.equal(await page.locator('#success-gain').textContent(), `+${(expected['OS-native'].success - expected.MobileClaw.success).toFixed(1)} percentage points`);
+      for (const name of ['OS-native', 'MobileClaw', 'MobileWorld']) {
+        const row = page.locator(`#challenge-rows [data-system="${name}"]`);
+        const scores = [expected[name].success, ...expected[name].challenge_success];
+        assert.deepEqual(await row.locator('.score-number').allTextContents(), scores.map(value => value.toFixed(1)));
+        assert.deepEqual(await row.locator('.score-track i').evaluateAll(bars => bars.map(bar => bar.style.width)), scores.map(value => `${value}%`));
+      }
+      // Table 4 is explicitly GPT-5.4 only; Table 5 always shows both models.
+      assert.deepEqual(await page.locator('.event-table tbody tr').evaluateAll(rows => rows.map(row => [...row.cells].map(cell => cell.textContent))),
+        results.event_success.groups.map(row => [row.events, String(row.tasks), ...['OS-native', 'MobileClaw', 'MobileWorld'].map(system => row[system].toFixed(1))]));
+      assert.deepEqual(await page.locator('.continuation-table tbody tr').evaluateAll(rows => rows.map(row => [...row.cells].map(cell => cell.textContent))),
+        ['OS-native', 'MobileClaw', 'MobileWorld'].map(system => [system, ...['GPT-5.4', 'GPT-5.4-mini'].flatMap(model => ['initial', 'full'].map(phase => String(results.continuation_success.models[model][system][phase])))]));
     }
     await page.getByRole('tab', { name: 'GPT-5.4', exact: true }).focus();
     await page.keyboard.press('ArrowRight');
@@ -49,6 +60,17 @@ const output = path.join(__dirname, '..', 'preview');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${width}px page overflow`);
       if (width === 390) await page.screenshot({ path: path.join(output, 'project-mobile.png'), fullPage: true });
     }
+    const taskLinks = await page.locator('.task-card').evaluateAll(cards => cards.map(card => card.href));
+    const showcase = await (await page.request.get(`${base}/data/showcase.json`)).json();
+    assert.equal(taskLinks.length, 6);
+    for (const [index, link] of taskLinks.entries()) {
+      await page.goto(link);
+      await page.locator(`[data-task="v4_t0${31 + index}"][aria-pressed="true"]`).waitFor();
+      assert.equal(await page.locator(`[data-task="v4_t0${31 + index}"]`).getAttribute('aria-pressed'), 'true');
+      assert.deepEqual(await page.evaluate(() => ['native', 'claw'].map(key => filtered(key)[state.positions[key]].index)),
+        [showcase.examples[index].native, showcase.examples[index].claw]);
+    }
+    await page.goto(`${base}/`);
     await page.getByRole('link', { name: 'Open the interactive comparison' }).click();
     await page.locator('#native .step-title').waitFor();
     assert(page.url().includes('/demo/'));
@@ -65,6 +87,6 @@ const output = path.join(__dirname, '..', 'preview');
     assert.equal(await page.locator('[data-task="v4_t036"]').getAttribute('aria-pressed'), 'true');
     assert.deepEqual(errors, []);
     assert.deepEqual(failures, []);
-    console.log('PASS: arXiv placeholder, result tabs, keyboard navigation, citation copy, 320/390px layouts, Demo links and old deep links.');
+    console.log('PASS: paper Tables 3–5, model tabs and score bars, all six screenshot deep links, keyboard navigation, citation copy, 320/390px layouts, arXiv placeholder and old deep links.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exit(1); });

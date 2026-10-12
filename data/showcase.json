@@ -1,0 +1,143 @@
+{
+  "description": "Screenshots of the local trajectory viewer, showing selected steps from saved runs. Capture kinds and source image hashes are retained below.",
+  "examples": [
+    {
+      "task": "v4_t031",
+      "title": "Lamp repair",
+      "description": "Restore the original brightness after repair.",
+      "native": 105,
+      "claw": 237,
+      "thumbnail": "assets/figures/demo-t031.png",
+      "href": "demo/#scene=home_repair&stage=maya_repair_complete&filter=all&n=6&c=3&task=v4_t031",
+      "stage": "maya_repair_complete",
+      "images": {
+        "native": {
+          "path": "assets/602ac7380d631ed361fdfdbcfe4839e445a1bd8ea96d17513bf20f3a38b2d836.png",
+          "sha256": "602ac7380d631ed361fdfdbcfe4839e445a1bd8ea96d17513bf20f3a38b2d836",
+          "capture_kind": "continuous_action_replay"
+        },
+        "claw": {
+          "path": "assets/8f2aaf7c316512ac048bc031bcf176294f92c99ff1e437f44ff2f703ce765f4a.png",
+          "sha256": "8f2aaf7c316512ac048bc031bcf176294f92c99ff1e437f44ff2f703ce765f4a",
+          "capture_kind": "archived_after_action"
+        }
+      },
+      "thumbnail_sha256": "cd4f58a71bd92f665e3069448b7f07a1a5419ec5ad9e5a3063e921559d6967fd"
+    },
+    {
+      "task": "v4_t032",
+      "title": "Thermostat reconnection",
+      "description": "Resume the task when the device comes back online.",
+      "native": 119,
+      "claw": 253,
+      "thumbnail": "assets/figures/demo-t032.png",
+      "href": "demo/#scene=home_repair&stage=thermostat_online&filter=all&n=7&c=6&task=v4_t032",
+      "stage": "thermostat_online",
+      "images": {
+        "native": {
+          "path": "assets/db6c00a8ab0f2f62a3f56a143e2e374827d3f2cfdaf91c2bb3cb98b5f36cb407.png",
+          "sha256": "db6c00a8ab0f2f62a3f56a143e2e374827d3f2cfdaf91c2bb3cb98b5f36cb407",
+          "capture_kind": "continuous_action_replay"
+        },
+        "claw": {
+          "path": "assets/240779f40aec3bd590b5009ad180fa84227fc6898a39bec41fcb5fc773639b43.png",
+          "sha256": "240779f40aec3bd590b5009ad180fa84227fc6898a39bec41fcb5fc773639b43",
+          "capture_kind": "archived_after_action"
+        }
+      },
+      "thumbnail_sha256": "4625852ded36e766e21598b666c1846db5d88bcee9378e43543a5845c104b82e"
+    },
+    {
+      "task": "v4_t033",
+      "title": "Repair verification",
+      "description": "Check the technician’s claim against device state.",
+      "native": 88,
+      "claw": 208,
+      "thumbnail": "assets/figures/demo-t033.png",
+      "href": "demo/#scene=home_repair&stage=technician_message&filter=all&n=2&c=0&task=v4_t033",
+      "stage": "technician_message",
+      "images": {
+        "native": {
+          "path": "assets/9d18aab4ebf3a8c682a5e2ffd06828e0a49fdbca37484fcba3c12ef866ca65e9.png",
+          "sha256": "9d18aab4ebf3a8c682a5e2ffd06828e0a49fdbca37484fcba3c12ef866ca65e9",
+          "capture_kind": "continuous_action_replay"
+        },
+        "claw": {
+          "path": "assets/f10e85463f48daf2ee2611e429fc3d79725265570a73513e1c728162624f03f4.png",
+          "sha256": "f10e85463f48daf2ee2611e429fc3d79725265570a73513e1c728162624f03f4",
+          "capture_kind": "archived_observation"
+        }
+      },
+      "thumbnail_sha256": "a7a21f9c1b8d45dcedcbfe33a85f45c6bf4eca5c9a007fe20edb63af9fed4c6c"
+    },
+    {
+      "task": "v4_t034",
+      "title": "Deferred lighting",
+      "description": "Finish offline work without undoing later manual changes.",
+      "native": 131,
+      "claw": 281,
+      "thumbnail": "assets/figures/demo-t034.png",
+      "href": "demo/#scene=home_repair&stage=hallway_recovers&filter=all&n=4&c=18&task=v4_t034",
+      "stage": "hallway_recovers",
+      "images": {
+        "native": {
+          "path": "assets/978b87c528b83139e00274b76c6b2ee35a2771903bc629c308c00a46cf9e84e8.png",
+          "sha256": "978b87c528b83139e00274b76c6b2ee35a2771903bc629c308c00a46cf9e84e8",
+          "capture_kind": "continuous_action_replay"
+        },
+        "claw": {
+          "path": "assets/5aa9061f0c1f7537b0e147d55a1042a08b808ced0f02ca51e4cd60ba8494148d.png",
+          "sha256": "5aa9061f0c1f7537b0e147d55a1042a08b808ced0f02ca51e4cd60ba8494148d",
+          "capture_kind": "archived_after_action"
+        }
+      },
+      "thumbnail_sha256": "7d323f62cc618c12737df84589da3dcb2ee2d69d107e85a1248174ab0037d796"
+    },
+    {
+      "task": "v4_t035",
+      "title": "Partial cancellation",
+      "description": "Stop one part of a delegation while preserving the rest.",
+      "native": 95,
+      "claw": 220,
+      "thumbnail": "assets/figures/demo-t035.png",
+      "href": "demo/#scene=home_repair&stage=maya_arrived_home&filter=all&n=2&c=3&task=v4_t035",
+      "stage": "maya_arrived_home",
+      "images": {
+        "native": {
+          "path": "assets/d50d34b75c98f663cdcbc233fdf7fc180fc81e8d0c8d010709108484ee952815.png",
+          "sha256": "d50d34b75c98f663cdcbc233fdf7fc180fc81e8d0c8d010709108484ee952815",
+          "capture_kind": "continuous_action_replay"
+        },
+        "claw": {
+          "path": "assets/2404439c231499397b4031061be9a4abb9d6d500e94638d0d9261bf01921a887.png",
+          "sha256": "2404439c231499397b4031061be9a4abb9d6d500e94638d0d9261bf01921a887",
+          "capture_kind": "archived_after_action"
+        }
+      },
+      "thumbnail_sha256": "6432c7ddc42e203283f71abf95e91fd2ddd872965e672fc467f01e7108b00b39"
+    },
+    {
+      "task": "v4_t036",
+      "title": "Temporary access",
+      "description": "Revoke the helper’s access when the work is finished.",
+      "native": 138,
+      "claw": 322,
+      "thumbnail": "assets/figures/demo-t036.png",
+      "href": "demo/#scene=home_repair&stage=helper_finished&filter=all&n=3&c=20&task=v4_t036",
+      "stage": "helper_finished",
+      "images": {
+        "native": {
+          "path": "assets/5ecdb411dacbfe4d1dee3a37bd5dd2254b4bb0b9f498eb078aa93519dcb98328.png",
+          "sha256": "5ecdb411dacbfe4d1dee3a37bd5dd2254b4bb0b9f498eb078aa93519dcb98328",
+          "capture_kind": "continuous_action_replay"
+        },
+        "claw": {
+          "path": "assets/f0d2dbe14482f9a569ce4d77c85d7487bda0acea0458e145b1bd3ce882776d47.png",
+          "sha256": "f0d2dbe14482f9a569ce4d77c85d7487bda0acea0458e145b1bd3ce882776d47",
+          "capture_kind": "archived_after_action"
+        }
+      },
+      "thumbnail_sha256": "0857b9390271da405e047d218714f1e1cafadb7fd629a98565d6a42cc606deca"
+    }
+  ]
+}

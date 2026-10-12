@@ -26,7 +26,7 @@
   </div></header>
   <main id="main" class="wrap">
     <section class="hero" aria-labelledby="title">
-      <p class="eyebrow">Android agents · DynamicWorld</p>
+
       <h1 id="title"><span>OS-native</span> Agents</h1>
       <p class="subtitle">Managing User Tasks<br>in the Dynamic Mobile World</p>
       <div class="authors"><span>Qiming Zhu<sup>1</sup></span><span>Shunian Chen<sup>1</sup></span><span>Wentao Ge<sup>1</sup></span><span>Zhengyang Tang<sup>1</sup></span><span>Xiaoguang Li<sup>2</sup></span><span>Pinjia He<sup>1</sup></span><span>Benyou Wang<sup>1</sup></span></div>
@@ -45,28 +45,39 @@
     </section>
 
     <section id="demo" class="section demo-section" aria-labelledby="demo-title">
-      <div class="demo-panel">
-        <div class="demo-copy">
-          <p class="eyebrow">See an ongoing task unfold</p>
-          <h2 id="demo-title">Managing six ongoing tasks<br>during home repair.</h2>
-          <blockquote class="quote">“Turn the bedside lamp off for repair. When Maya says it is fixed, turn it back on and restore its earlier brightness. Leave the other lights alone.”</blockquote>
-          <p>Six delegations share one home-repair scenario. Follow repair updates, device outages, a family member’s return and temporary helper access through the recorded OS-native and MobileClaw trajectories.</p>
-          <a class="button primary" href="demo/#scene=home_repair&stage=maya_repair_complete&task=v4_t031&n=6&c=3">Open the interactive comparison ↗</a>
-          <div class="case-links" aria-label="Jump to a task"><a href="demo/#scene=home_repair&task=v4_t034">Offline device</a><a href="demo/#scene=home_repair&task=v4_t035">Stop a delegation</a><a href="demo/#scene=home_repair&task=v4_t036">Temporary access</a></div>
-        </div>
-        <div class="demo-visual">
-          <div class="trace-comparison">
-            <article class="trace-card native-card"><header>OS-native<span>Native tool</span></header><div class="trace-body"><p class="trace-label">Recorded state readback</p><pre class="trace-call">get_device_details<br>device_id:<br>guest_bedside_lamp</pre><dl class="readback"><div><dt>Room</dt><dd>Guest Bedroom</dd></div><div><dt>Brightness</dt><dd class="big">35%</dd></div><div><dt>Power</dt><dd>On</dd></div></dl><p class="step-index">Recorded step 105</p></div></article>
-            <article class="trace-card claw-card"><header>MobileClaw<span>GUI action</span></header><div class="trace-body"><p class="trace-label">Recorded model reasoning</p><blockquote>“The Main Bedroom Bedside Lamp detail page already shows brightness at 35%, so I only need to turn it on without changing any other setting or device.”</blockquote><pre class="trace-call" style="margin-top:15px">action_type: click<br>x: 306<br>y: 702</pre><p class="step-index">Recorded step 237</p></div></article>
-          </div>
-          <p class="source-note">Selected trajectories from the repair-complete event. Full benchmark results are reported below; run details and screenshot provenance are available in the viewer.</p>
-          <!-- The viewer replays saved data locally and does not call a model. -->
-        </div>
+      <div class="section-heading"><h2 id="demo-title">Trajectory examples</h2><p>Six tasks in a shared home-repair scenario. Compare the recorded OS-native and MobileClaw trajectories, including phone screens, actions and outcomes.</p></div>
+      <div class="task-grid">
+        <a class="task-card" href="demo/#scene=home_repair&amp;stage=maya_repair_complete&amp;filter=all&amp;n=6&amp;c=3&amp;task=v4_t031" aria-label="T031: Lamp repair — view trajectories">
+          <img src="assets/figures/demo-t031.png" alt="OS-native and MobileClaw in the trajectory viewer: lamp repair." width="1216" height="821" loading="lazy">
+          <div class="task-card-copy"><span class="task-number">T031</span><h3>Lamp repair</h3><p>Restore the original brightness after repair.</p></div>
+        </a>
+        <a class="task-card" href="demo/#scene=home_repair&amp;stage=thermostat_online&amp;filter=all&amp;n=7&amp;c=6&amp;task=v4_t032" aria-label="T032: Thermostat reconnection — view trajectories">
+          <img src="assets/figures/demo-t032.png" alt="OS-native and MobileClaw in the trajectory viewer: thermostat reconnection." width="1216" height="821" loading="lazy">
+          <div class="task-card-copy"><span class="task-number">T032</span><h3>Thermostat reconnection</h3><p>Resume the task when the device comes back online.</p></div>
+        </a>
+        <a class="task-card" href="demo/#scene=home_repair&amp;stage=technician_message&amp;filter=all&amp;n=2&amp;c=0&amp;task=v4_t033" aria-label="T033: Repair verification — view trajectories">
+          <img src="assets/figures/demo-t033.png" alt="OS-native and MobileClaw in the trajectory viewer: repair verification." width="1216" height="821" loading="lazy">
+          <div class="task-card-copy"><span class="task-number">T033</span><h3>Repair verification</h3><p>Check the technician’s claim against device state.</p></div>
+        </a>
+        <a class="task-card" href="demo/#scene=home_repair&amp;stage=hallway_recovers&amp;filter=all&amp;n=4&amp;c=18&amp;task=v4_t034" aria-label="T034: Deferred lighting — view trajectories">
+          <img src="assets/figures/demo-t034.png" alt="OS-native and MobileClaw in the trajectory viewer: deferred lighting." width="1216" height="821" loading="lazy">
+          <div class="task-card-copy"><span class="task-number">T034</span><h3>Deferred lighting</h3><p>Finish offline work without undoing later manual changes.</p></div>
+        </a>
+        <a class="task-card" href="demo/#scene=home_repair&amp;stage=maya_arrived_home&amp;filter=all&amp;n=2&amp;c=3&amp;task=v4_t035" aria-label="T035: Partial cancellation — view trajectories">
+          <img src="assets/figures/demo-t035.png" alt="OS-native and MobileClaw in the trajectory viewer: partial cancellation." width="1216" height="821" loading="lazy">
+          <div class="task-card-copy"><span class="task-number">T035</span><h3>Partial cancellation</h3><p>Stop one part of a delegation while preserving the rest.</p></div>
+        </a>
+        <a class="task-card" href="demo/#scene=home_repair&amp;stage=helper_finished&amp;filter=all&amp;n=3&amp;c=20&amp;task=v4_t036" aria-label="T036: Temporary access — view trajectories">
+          <img src="assets/figures/demo-t036.png" alt="OS-native and MobileClaw in the trajectory viewer: temporary access." width="1216" height="821" loading="lazy">
+          <div class="task-card-copy"><span class="task-number">T036</span><h3>Temporary access</h3><p>Revoke the helper’s access when the work is finished.</p></div>
+        </a>
       </div>
+      <div class="demo-links"><a class="button primary" href="demo/#scene=home_repair&amp;stage=maya_repair_complete&amp;task=v4_t031&amp;n=6&amp;c=3">Open the interactive comparison ↗</a><a class="text-link" href="demo/#scene=home_repair">View the full scenario ↗</a></div>
+      <p class="showcase-note">Screenshots from the trajectory viewer. Run details and screenshot provenance are available in the viewer.</p>
     </section>
 
     <section id="framework" class="section" aria-labelledby="framework-title">
-      <p class="eyebrow">The framework</p><h2 id="framework-title">From user-managed to agent-managed tasks.</h2>
+      <h2 id="framework-title">OS-native framework</h2>
       <p class="section-intro">The OS already mediates application activity, service access, and permissions across the device. OS-native integration connects the agent to the services that maintain current state and govern its use, including when later events prompt another action.</p>
       <figure class="figure"><a href="assets/figures/os-native-framework.png"><img src="assets/figures/os-native-framework.png" alt="OS-native framework: persistent sessions register monitors, events resume reasoning, and native capabilities operate under permission and audit controls." loading="lazy" width="1800" height="815"></a><figcaption>The Android realization combines native Android services and application interfaces with an extended DeepSeek Harness.</figcaption></figure>
       <div class="pillars"><div class="pillar"><h3>State</h3><p>Receive changes while reasoning is paused. Query current app and system state when work resumes.</p></div><div class="pillar"><h3>Capability</h3><p>Discover available operations and their providers. Compose app functions, system operations, intents, and GUI actions across apps.</p></div><div class="pillar"><h3>Trust</h3><p>Check access under the caller’s identity, obtain confirmation for supported sensitive operations, and record execution and authorization decisions.</p></div></div>
@@ -76,7 +87,7 @@
     </section>
 
     <section id="dynamicworld" class="section" aria-labelledby="benchmark-title">
-      <p class="eyebrow">The benchmark</p><h2 id="benchmark-title">DynamicWorld</h2>
+      <h2 id="benchmark-title">DynamicWorld</h2>
       <p class="section-intro">A replayable benchmark for managing multiple ongoing tasks in a shared Android environment. Controlled changes in applications, system state, time, and user requests require agents to coordinate tasks across interactions; earlier actions shape later decisions.</p>
       <figure class="figure"><a href="assets/figures/dynamicworld-benchmark.png"><img src="assets/figures/dynamicworld-benchmark.png" alt="DynamicWorld task coverage, 18 Android apps, four sources of change and shared airport delegations." loading="lazy"></a><figcaption>The airport example illustrates coordinated revisions across a pickup calendar, driver messages and a train shortlist. The interactive demo above explores a separate home-repair scenario.</figcaption></figure>
       <div class="benchmark-details"><div><h3>Outcomes and action constraints.</h3><p>Results must hold when each requirement applies, including after revisions and cancellation. Unauthorized actions can invalidate a task even when the final state appears correct.</p></div><div><h3>Evaluation over time.</h3><p>Programmatic checks verify app state and effects. An independent model judge evaluates open-ended content where needed. Formal scores use complete scenarios.</p></div></div>
@@ -84,14 +95,47 @@
     </section>
 
     <section id="results" class="section" aria-labelledby="results-title">
-      <p class="eyebrow">Main results · Table 3</p><div class="results-top"><div><h2 id="results-title">Task management in DynamicWorld.</h2><p class="section-intro">Complete agent systems evaluated on 88 tasks across 16 scenarios.</p></div><div class="model-tabs" role="tablist" aria-label="Model configuration"><button id="tab-full" role="tab" aria-selected="true" aria-controls="result-panel" data-model="GPT-5.4">GPT-5.4</button><button id="tab-mini" role="tab" aria-selected="false" aria-controls="result-panel" tabindex="-1" data-model="GPT-5.4-mini">GPT-5.4-mini</button></div></div>
-      <div id="result-panel" role="tabpanel" aria-labelledby="tab-full"><div class="chart" role="img" aria-label="GPT-5.4 task success: OS-native 76.1%, MobileClaw 40.9%, MobileWorld 23.9%"><div class="bar-row"><span class="bar-name native">OS-native</span><div class="bar-track"><div class="bar" style="--score:76.1%"></div></div><span class="bar-value">76.1%</span></div><div class="bar-row"><span class="bar-name">MobileClaw</span><div class="bar-track"><div class="bar" style="--score:40.9%"></div></div><span class="bar-value">40.9%</span></div><div class="bar-row"><span class="bar-name">MobileWorld</span><div class="bar-track"><div class="bar" style="--score:23.9%"></div></div><span class="bar-value">23.9%</span></div><div class="chart-axis"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div></div>
+      <div class="section-heading"><h2 id="results-title">Experimental results</h2><p>Task success on DynamicWorld: 88 tasks across 16 scenarios.<br>The same named model supplies all inference within each comparison.</p></div>
+      <div class="results-toolbar"><h3>Task success <span>(%, higher is better)</span></h3><div class="model-tabs" role="tablist" aria-label="Model configuration"><button id="tab-full" role="tab" aria-selected="true" aria-controls="result-panel" data-model="GPT-5.4">GPT-5.4</button><button id="tab-mini" role="tab" aria-selected="false" aria-controls="result-panel" tabindex="-1" data-model="GPT-5.4-mini">GPT-5.4-mini</button></div></div>
+      <div id="result-panel" role="tabpanel" aria-labelledby="tab-full">
+        <div class="table-wrap score-table-wrap" tabindex="0" role="region" aria-label="Table 3: overall and challenge success rates"><table class="challenge-table"><caption class="visually-hidden">Table 3. Task success by primary challenge. All values are percentages.</caption><thead><tr><th scope="col">Agent system</th><th scope="col" class="overall">Overall<small>88 tasks</small></th><th scope="col" data-challenge="Clarify">Clarify<small>8 tasks</small></th><th scope="col" data-challenge="Integrate">Integrate<small>21 tasks</small></th><th scope="col" data-challenge="Timing">Timing<small>21 tasks</small></th><th scope="col" data-challenge="Replan">Replan<small>22 tasks</small></th><th scope="col" data-challenge="Risk">Risk<small>11 tasks</small></th><th scope="col" data-challenge="Basic">Basic<small>5 tasks</small></th></tr></thead><tbody id="challenge-rows">
+<tr class="native" data-system="OS-native"><th scope="row">OS-native</th><td class="overall"><span class="score-number">76.1</span><span class="score-track" aria-hidden="true"><i style="width:76.1%"></i></span></td><td><span class="score-number">62.5</span><span class="score-track" aria-hidden="true"><i style="width:62.5%"></i></span></td><td><span class="score-number">61.9</span><span class="score-track" aria-hidden="true"><i style="width:61.9%"></i></span></td><td><span class="score-number">81.0</span><span class="score-track" aria-hidden="true"><i style="width:81.0%"></i></span></td><td><span class="score-number">86.4</span><span class="score-track" aria-hidden="true"><i style="width:86.4%"></i></span></td><td><span class="score-number">72.7</span><span class="score-track" aria-hidden="true"><i style="width:72.7%"></i></span></td><td><span class="score-number">100.0</span><span class="score-track" aria-hidden="true"><i style="width:100.0%"></i></span></td></tr>
+<tr class="claw" data-system="MobileClaw"><th scope="row">MobileClaw</th><td class="overall"><span class="score-number">40.9</span><span class="score-track" aria-hidden="true"><i style="width:40.9%"></i></span></td><td><span class="score-number">25.0</span><span class="score-track" aria-hidden="true"><i style="width:25.0%"></i></span></td><td><span class="score-number">33.3</span><span class="score-track" aria-hidden="true"><i style="width:33.3%"></i></span></td><td><span class="score-number">52.4</span><span class="score-track" aria-hidden="true"><i style="width:52.4%"></i></span></td><td><span class="score-number">50.0</span><span class="score-track" aria-hidden="true"><i style="width:50.0%"></i></span></td><td><span class="score-number">36.4</span><span class="score-track" aria-hidden="true"><i style="width:36.4%"></i></span></td><td><span class="score-number">20.0</span><span class="score-track" aria-hidden="true"><i style="width:20.0%"></i></span></td></tr>
+<tr class="world" data-system="MobileWorld"><th scope="row">MobileWorld</th><td class="overall"><span class="score-number">23.9</span><span class="score-track" aria-hidden="true"><i style="width:23.9%"></i></span></td><td><span class="score-number">37.5</span><span class="score-track" aria-hidden="true"><i style="width:37.5%"></i></span></td><td><span class="score-number">19.0</span><span class="score-track" aria-hidden="true"><i style="width:19.0%"></i></span></td><td><span class="score-number">28.6</span><span class="score-track" aria-hidden="true"><i style="width:28.6%"></i></span></td><td><span class="score-number">13.6</span><span class="score-track" aria-hidden="true"><i style="width:13.6%"></i></span></td><td><span class="score-number">27.3</span><span class="score-track" aria-hidden="true"><i style="width:27.3%"></i></span></td><td><span class="score-number">40.0</span><span class="score-track" aria-hidden="true"><i style="width:40.0%"></i></span></td></tr>
+        </tbody></table></div>
+        <p class="scroll-hint">Scroll horizontally to compare all challenges.</p>
         <div class="result-summary" aria-live="polite"><span><strong id="success-gain">+35.2 percentage points</strong> task success vs. MobileClaw</span><span><strong id="call-reduction">58.0% fewer</strong> model calls vs. MobileClaw</span></div>
-        <div class="table-wrap"><table><caption class="skip">Resource use averaged over all 16 scenarios</caption><thead><tr><th scope="col">Agent system</th><th scope="col">Success ↑</th><th scope="col">Calls ↓</th><th scope="col">Reported tokens ↓</th><th scope="col">User requests</th></tr></thead><tbody id="result-rows"><tr class="native"><td>OS-native</td><td>76.1%</td><td>121.50</td><td>2.81M</td><td>3.13</td></tr><tr><td>MobileClaw</td><td>40.9%</td><td>289.56</td><td>3.42M</td><td>2.44</td></tr><tr><td>MobileWorld</td><td>23.9%</td><td>102.38</td><td>1.53M</td><td>1.44</td></tr></tbody></table></div>
-      </div><p class="result-footnote">Comparisons cover complete agent systems, including their environment interfaces and task-management mechanisms. Within each model configuration, the named model supplies all agent inference. Resource means include successful and unsuccessful tasks; user requests include supported authorization requests. <a class="text-link" href="data/dynamicworld-results.json">Result data ↗</a></p><p id="result-error" class="result-footnote" hidden></p>
+        <details class="challenge-definitions"><summary>Challenge definitions</summary><dl><div><dt>Clarify</dt><dd>Intent clarification</dd></div><div><dt>Integrate</dt><dd>Information integration and constraint coordination</dd></div><div><dt>Timing</dt><dd>Event awareness and timing</dd></div><div><dt>Replan</dt><dd>Adaptation and replanning</dd></div><div><dt>Risk</dt><dd>Risk and privacy decisions</dd></div><div><dt>Basic</dt><dd>Basic execution</dd></div></dl><p>Each task has one primary challenge. Category counts sum to 88.</p></details>
+        <div class="resource-section"><h3>Resource use <span>(mean per scenario)</span></h3><div class="table-wrap" tabindex="0" role="region" aria-label="Table 3: resource use"><table class="resource-table"><thead><tr><th scope="col">Agent system</th><th scope="col">Model calls ↓</th><th scope="col">Reported tokens ↓</th><th scope="col">User requests</th></tr></thead><tbody id="result-rows">
+<tr class="native"><th scope="row">OS-native</th><td>121.50</td><td>2.81M</td><td>3.13</td></tr>
+<tr class="claw"><th scope="row">MobileClaw</th><td>289.56</td><td>3.42M</td><td>2.44</td></tr>
+<tr class="world"><th scope="row">MobileWorld</th><td>102.38</td><td>1.53M</td><td>1.44</td></tr>
+        </tbody></table></div></div>
+      </div>
+      <p class="result-footnote">Table 3. Comparisons cover complete agent systems, including their environment interfaces and task-management mechanisms. Resource means include successful and unsuccessful tasks across all 16 scenarios; user requests include authorization for sensitive operations. <a class="text-link" href="data/dynamicworld-results.json">Result data ↗</a></p><p id="result-error" class="result-footnote" hidden></p>
+      <div class="continuation-section" aria-labelledby="continuation-title">
+        <div class="subsection-heading"><div><h3 id="continuation-title">Task fulfillment over time</h3></div></div>
+        <div class="analysis-grid">
+          <article class="analysis-card"><div class="analysis-card-head"><span class="eyebrow">Table 4</span><span class="model-badge">GPT-5.4 only</span></div><h4>Success by subsequent events</h4><p>Full-task success (%) by the number of task-related events after delegation.</p>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Table 4: success by event count"><table class="event-table"><thead><tr><th scope="col">Events</th><th scope="col">Tasks</th><th scope="col">OS-native</th><th scope="col">MobileClaw</th><th scope="col">MobileWorld</th></tr></thead><tbody>
+              <tr><th scope="row">0</th><td>19</td><td class="native-value">78.9</td><td>52.6</td><td>52.6</td></tr>
+              <tr><th scope="row">1</th><td>22</td><td class="native-value">77.3</td><td>36.4</td><td>18.2</td></tr>
+              <tr><th scope="row">2</th><td>23</td><td class="native-value">82.6</td><td>47.8</td><td>17.4</td></tr>
+              <tr><th scope="row">≥3</th><td>24</td><td class="native-value">66.7</td><td>29.2</td><td>12.5</td></tr>
+            </tbody></table></div><p class="analysis-note">All 88 tasks appear once. Events include messages and state updates through scenario end, including after closure; clock-only nodes are excluded.</p>
+          </article>
+          <article class="analysis-card"><div class="analysis-card-head"><span class="eyebrow">Table 5</span><span class="model-badge">78 tasks · Counts</span></div><h4>Initial and full-task success</h4><p>Successful tasks among the 78 delegations with subsequent requirements. Values are counts, not percentages.</p>
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Table 5: initial and full-task success counts"><table class="continuation-table"><thead><tr><th scope="col" rowspan="2">Agent system</th><th scope="colgroup" colspan="2">GPT-5.4</th><th scope="colgroup" colspan="2">GPT-5.4-mini</th></tr><tr><th scope="col">Initial</th><th scope="col">Full</th><th scope="col">Initial</th><th scope="col">Full</th></tr></thead><tbody>
+              <tr class="native"><th scope="row">OS-native</th><td>68</td><td>60</td><td>47</td><td>27</td></tr>
+              <tr><th scope="row">MobileClaw</th><td>43</td><td>33</td><td>25</td><td>12</td></tr>
+              <tr><th scope="row">MobileWorld</th><td>37</td><td>19</td><td>12</td><td>4</td></tr>
+            </tbody></table></div><p class="analysis-note">Initial success meets the first-delivery requirements. Full success also meets later revision, continuation or preservation requirements on the same 78 tasks.</p>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section id="getting-started" class="section getting-started" aria-labelledby="start-title"><div><p class="eyebrow">Try it yourself</p><h2 id="start-title">Run the Android realization.</h2><p>Linux x86_64 with KVM. We recommend 16 GB RAM and 50 GB free disk, plus a model service with tool-call support.</p><p>Setup prepares host tools and builds the research apps locally. Configure your model in <code>.env</code>, start the phone, then enter a task in OS-native Agent.</p><a class="text-link" href="https://github.com/FreedomIntelligence/OSNativeAgent/blob/main/setup-osnative.md">Setup guide ↗</a></div><div class="code-panel"><div class="panel-title"><span>Quick start</span><button class="copy-button" data-copy="quickstart" aria-label="Copy quick start commands">Copy</button></div><pre id="quickstart">git clone https://github.com/FreedomIntelligence/OSNativeAgent.git
+    <section id="getting-started" class="section getting-started" aria-labelledby="start-title"><div><h2 id="start-title">Getting started</h2><p>Linux x86_64 with KVM. We recommend 16 GB RAM and 50 GB free disk, plus a model service with tool-call support.</p><p>Setup prepares host tools and builds the research apps locally. Configure your model in <code>.env</code>, start the phone, then enter a task in OS-native Agent.</p><a class="text-link" href="https://github.com/FreedomIntelligence/OSNativeAgent/blob/main/setup-osnative.md">Setup guide ↗</a></div><div class="code-panel"><div class="panel-title"><span>Quick start</span><button class="copy-button" data-copy="quickstart" aria-label="Copy quick start commands">Copy</button></div><pre id="quickstart">git clone https://github.com/FreedomIntelligence/OSNativeAgent.git
 cd OSNativeAgent
 bash osnative setup
 
