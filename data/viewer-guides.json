@@ -1,0 +1,80 @@
+{
+  "home_repair": [
+    {
+      "title": "确认维修对象",
+      "native": 6,
+      "claw": 9
+    },
+    {
+      "title": "恢复原亮度",
+      "native": 105,
+      "claw": 236
+    },
+    {
+      "title": "GUI：开启临时权限",
+      "native": 65,
+      "claw": 130
+    },
+    {
+      "title": "GUI：收回权限",
+      "native": 138,
+      "claw": 322
+    }
+  ],
+  "airport_coordination": [
+    {
+      "title": "首次日历读回",
+      "native": 7,
+      "claw": 10
+    },
+    {
+      "title": "延误后更新",
+      "native": 30,
+      "claw": null
+    },
+    {
+      "title": "航站楼变更",
+      "native": 64,
+      "claw": null
+    }
+  ],
+  "evening_errands": [
+    {
+      "title": "GUI：修改配送地址",
+      "native": 19,
+      "claw": 36
+    },
+    {
+      "title": "GUI：保存新地址",
+      "native": 21,
+      "claw": 37
+    },
+    {
+      "title": "备餐后再次检查",
+      "native": 24,
+      "claw": 63
+    },
+    {
+      "title": "退款到账后的补买",
+      "native": 92,
+      "claw": 180
+    }
+  ],
+  "cross_district_course": [
+    {
+      "title": "GUI：确认课程",
+      "native": 42,
+      "claw": null
+    },
+    {
+      "title": "原生接口：取消日历",
+      "native": 52,
+      "claw": 175
+    },
+    {
+      "title": "GUI：通知同伴取消",
+      "native": 56,
+      "claw": 183
+    }
+  ]
+}

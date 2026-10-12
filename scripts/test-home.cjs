@@ -60,22 +60,39 @@ const output = path.join(__dirname, '..', 'preview');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${width}px page overflow`);
       if (width === 390) await page.screenshot({ path: path.join(output, 'project-mobile.png'), fullPage: true });
     }
-    const taskLinks = await page.locator('.task-card').evaluateAll(cards => cards.map(card => card.href));
-    const showcase = await (await page.request.get(`${base}/data/showcase.json`)).json();
-    assert.equal(taskLinks.length, 6);
-    for (const [index, link] of taskLinks.entries()) {
-      await page.goto(link);
-      await page.locator(`[data-task="v4_t0${31 + index}"][aria-pressed="true"]`).waitFor();
-      assert.equal(await page.locator(`[data-task="v4_t0${31 + index}"]`).getAttribute('aria-pressed'), 'true');
-      assert.deepEqual(await page.evaluate(() => ['native', 'claw'].map(key => filtered(key)[state.positions[key]].index)),
-        [showcase.examples[index].native, showcase.examples[index].claw]);
+    await page.setViewportSize({width:1440,height:1000});
+    const stories = await (await page.request.get(`${base}/data/stories.json`)).json();
+    assert.equal(stories.stories.length, 4);
+    const deepLinks = [];
+    for (const story of stories.stories) {
+      await page.getByRole('tab', {name:story.title,exact:true}).click();
+      for (const [i, moment] of story.moments.entries()) {
+        await page.locator('.story-moment').nth(i).click();
+        assert.equal(await page.locator('#story-showcase').getAttribute('data-step'), String(moment.step));
+        assert.equal(await page.locator('.story-mode').textContent(), moment.mode === 'gui' ? 'GUI action' : 'Native interface');
+        if (moment.mode === 'gui') {
+          assert(moment.image && moment.image_sha256);
+          await page.waitForFunction(() => [...document.querySelectorAll('.story-evidence img')].every(img => img.complete && img.naturalWidth > 0));
+          assert.match(await page.locator('.story-capture').textContent(), /replaying saved actions/);
+        } else {
+          assert.equal(await page.locator('.story-record').count(), 1);
+          assert.equal(await page.locator('.story-phone').count(), 0);
+          assert.match(await page.locator('.story-capture').textContent(), /Original tool return/);
+        }
+        deepLinks.push({href:await page.locator('.story-open').getAttribute('href'),scene:story.id,native:moment.step});
+      }
     }
-    await page.goto(`${base}/`);
-    await page.getByRole('link', { name: 'Open the interactive comparison' }).click();
-    await page.locator('#native .step-title').waitFor();
-    assert(page.url().includes('/demo/'));
-    assert.equal(await page.locator('[data-task="v4_t031"]').getAttribute('aria-pressed'), 'true');
-    assert.deepEqual(await page.evaluate(() => ['native', 'claw'].map(key => filtered(key)[state.positions[key]].index)), [105, 237]);
+    await page.getByRole('tab', {name:'Home repair',exact:true}).focus();
+    await page.keyboard.press('End');
+    assert.equal(await page.locator('#story-tab-cross_district_course').getAttribute('aria-selected'), 'true');
+    await page.keyboard.press('Home');
+    assert.equal(await page.locator('#story-tab-home_repair').getAttribute('aria-selected'), 'true');
+    for (const link of deepLinks) {
+      await page.goto(`${base}/${link.href}`);
+      await page.waitForFunction(link => state.data?.id === link.scene && filtered('native')[state.positions.native]?.index === link.native, link);
+      assert.equal(await page.evaluate(() => filtered('native')[state.positions.native].index), link.native);
+      assert.match(await page.locator('#native .lane-model').textContent(), /gpt-5.4/);
+    }
     await page.setViewportSize({ width: 1600, height: 1100 });
     await page.goto(`${base}/demo/#scene=home_repair&stage=maya_repair_complete&filter=all`);
     await page.locator('#native .step-title').waitFor();
@@ -87,6 +104,6 @@ const output = path.join(__dirname, '..', 'preview');
     assert.equal(await page.locator('[data-task="v4_t036"]').getAttribute('aria-pressed'), 'true');
     assert.deepEqual(errors, []);
     assert.deepEqual(failures, []);
-    console.log('PASS: paper Tables 3–5, model tabs and score bars, all six screenshot deep links, keyboard navigation, citation copy, 320/390px layouts, arXiv placeholder and old deep links.');
+    console.log('PASS: paper Tables 3–5, model tabs and score bars, all four scenarios and twelve source-bound moments, keyboard navigation, citation copy, 320/390px layouts, arXiv placeholder and old deep links.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exit(1); });

@@ -17,6 +17,8 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23246b5e'/%3E%3Cpath d='M10 12h8v16h-8zm12 0h8v16h-8z' fill='white'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="home.css">
   <script src="home.js" defer></script>
+  <script src="stories.js" defer></script>
+  <noscript><style>.model-tabs,.copy-button{display:none}</style></noscript>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -45,35 +47,29 @@
     </section>
 
     <section id="demo" class="section demo-section" aria-labelledby="demo-title">
-      <div class="section-heading"><h2 id="demo-title">Trajectory examples</h2><p>Six tasks in a shared home-repair scenario. Compare the recorded OS-native and MobileClaw trajectories, including phone screens, actions and outcomes.</p></div>
-      <div class="task-grid">
-        <a class="task-card" href="demo/#scene=home_repair&amp;stage=maya_repair_complete&amp;filter=all&amp;n=6&amp;c=3&amp;task=v4_t031" aria-label="T031: Lamp repair — view trajectories">
-          <img src="assets/figures/demo-t031.png" alt="OS-native and MobileClaw in the trajectory viewer: lamp repair." width="1216" height="821" loading="lazy">
-          <div class="task-card-copy"><span class="task-number">T031</span><h3>Lamp repair</h3><p>Restore the original brightness after repair.</p></div>
-        </a>
-        <a class="task-card" href="demo/#scene=home_repair&amp;stage=thermostat_online&amp;filter=all&amp;n=7&amp;c=6&amp;task=v4_t032" aria-label="T032: Thermostat reconnection — view trajectories">
-          <img src="assets/figures/demo-t032.png" alt="OS-native and MobileClaw in the trajectory viewer: thermostat reconnection." width="1216" height="821" loading="lazy">
-          <div class="task-card-copy"><span class="task-number">T032</span><h3>Thermostat reconnection</h3><p>Resume the task when the device comes back online.</p></div>
-        </a>
-        <a class="task-card" href="demo/#scene=home_repair&amp;stage=technician_message&amp;filter=all&amp;n=2&amp;c=0&amp;task=v4_t033" aria-label="T033: Repair verification — view trajectories">
-          <img src="assets/figures/demo-t033.png" alt="OS-native and MobileClaw in the trajectory viewer: repair verification." width="1216" height="821" loading="lazy">
-          <div class="task-card-copy"><span class="task-number">T033</span><h3>Repair verification</h3><p>Check the technician’s claim against device state.</p></div>
-        </a>
-        <a class="task-card" href="demo/#scene=home_repair&amp;stage=hallway_recovers&amp;filter=all&amp;n=4&amp;c=18&amp;task=v4_t034" aria-label="T034: Deferred lighting — view trajectories">
-          <img src="assets/figures/demo-t034.png" alt="OS-native and MobileClaw in the trajectory viewer: deferred lighting." width="1216" height="821" loading="lazy">
-          <div class="task-card-copy"><span class="task-number">T034</span><h3>Deferred lighting</h3><p>Finish offline work without undoing later manual changes.</p></div>
-        </a>
-        <a class="task-card" href="demo/#scene=home_repair&amp;stage=maya_arrived_home&amp;filter=all&amp;n=2&amp;c=3&amp;task=v4_t035" aria-label="T035: Partial cancellation — view trajectories">
-          <img src="assets/figures/demo-t035.png" alt="OS-native and MobileClaw in the trajectory viewer: partial cancellation." width="1216" height="821" loading="lazy">
-          <div class="task-card-copy"><span class="task-number">T035</span><h3>Partial cancellation</h3><p>Stop one part of a delegation while preserving the rest.</p></div>
-        </a>
-        <a class="task-card" href="demo/#scene=home_repair&amp;stage=helper_finished&amp;filter=all&amp;n=3&amp;c=20&amp;task=v4_t036" aria-label="T036: Temporary access — view trajectories">
-          <img src="assets/figures/demo-t036.png" alt="OS-native and MobileClaw in the trajectory viewer: temporary access." width="1216" height="821" loading="lazy">
-          <div class="task-card-copy"><span class="task-number">T036</span><h3>Temporary access</h3><p>Revoke the helper’s access when the work is finished.</p></div>
-        </a>
+      <div class="section-heading"><h2 id="demo-title">Recorded GPT-5.4 cases</h2><p>Four shared scenarios, from home repair to changing travel plans. Follow native calls and GUI actions, then explore the full comparison with MobileClaw.</p></div>
+      <div id="story-showcase" class="story-showcase">
+        <div class="story-tabs" role="tablist" aria-label="Choose a recorded scenario" hidden><button id="story-tab-home_repair" role="tab" aria-selected="true" aria-controls="story-panel">Home repair</button></div>
+        <div id="story-panel" class="story-panel" role="tabpanel" aria-labelledby="story-tab-home_repair">
+          <div class="story-copy">
+            <p class="story-apps">SmartHome · QQ</p><h3 class="story-heading">Temporary access for a helper</h3>
+            <p class="story-task">Featured delegation · T036</p><blockquote class="story-request">Let Li Si control only the study lamp while he helps. When he says he is finished, remove that access. Leave everyone else’s permissions alone.</blockquote>
+            <div class="story-moments" aria-label="Selected moments"></div>
+            <a class="story-open text-link" href="demo/#scene=home_repair&amp;stage=establish_c30&amp;filter=all&amp;n=11&amp;c=42">Compare the full trajectories ↗</a>
+            <a class="story-all" href="demo/#scene=home_repair">All 6 tasks and outcomes ↗</a>
+          </div>
+          <div class="story-visual">
+            <div class="story-visual-head"><strong>OS-native <span>GPT-5.4</span></strong><span class="story-mode">GUI action</span></div>
+            <div class="story-evidence"><a class="story-phone" href="demo/#scene=home_repair&amp;stage=establish_c30&amp;filter=all&amp;n=11&amp;c=42"><img src="assets/8aa9f7cbbd5bca547c29e17eaa2bfe08664d26085ae72f34f8ee0ccf094df413.png" alt="SmartHome: Li Si’s study-lamp permission enabled through the GUI." width="1080" height="2400" loading="lazy"></a></div>
+            <div class="story-observation"><span class="story-step">Recorded step 65</span><p class="story-caption">Only the study-lamp permission is enabled for Li Si.</p></div>
+            <div class="story-controls" hidden><span class="story-progress">2 / 3 selected moments</span><div><button class="story-prev" type="button" aria-label="Previous recorded moment">←</button><button class="story-next" type="button" aria-label="Next recorded moment">→</button></div></div>
+          </div>
+        </div>
+        <p class="story-capture">Phone screen captured by replaying saved actions. Decisions and scores come from the original run.</p>
+        <p class="story-fallback" hidden>Explore the full recordings: <a href="demo/#scene=home_repair">Home repair</a> · <a href="demo/#scene=airport_coordination">Airport coordination</a> · <a href="demo/#scene=evening_errands">Evening orders</a> · <a href="demo/#scene=cross_district_course">Course planning</a></p>
+        <noscript><p class="story-fallback">Explore all recordings: <a href="demo/#scene=home_repair">Home repair</a> · <a href="demo/#scene=airport_coordination">Airport coordination</a> · <a href="demo/#scene=evening_errands">Evening orders</a> · <a href="demo/#scene=cross_district_course">Course planning</a></p></noscript>
       </div>
-      <div class="demo-links"><a class="button primary" href="demo/#scene=home_repair&amp;stage=maya_repair_complete&amp;task=v4_t031&amp;n=6&amp;c=3">Open the interactive comparison ↗</a><a class="text-link" href="demo/#scene=home_repair">View the full scenario ↗</a></div>
-      <p class="showcase-note">Screenshots from the trajectory viewer. Run details and screenshot provenance are available in the viewer.</p>
+      <p class="showcase-note">Selected moments from saved runs. User requests are translated and condensed. All 21 task outcomes, including incomplete tasks, remain available in the viewer.</p>
     </section>
 
     <section id="framework" class="section" aria-labelledby="framework-title">
@@ -89,7 +85,7 @@
     <section id="dynamicworld" class="section" aria-labelledby="benchmark-title">
       <h2 id="benchmark-title">DynamicWorld</h2>
       <p class="section-intro">A replayable benchmark for managing multiple ongoing tasks in a shared Android environment. Controlled changes in applications, system state, time, and user requests require agents to coordinate tasks across interactions; earlier actions shape later decisions.</p>
-      <figure class="figure"><a href="assets/figures/dynamicworld-benchmark.png"><img src="assets/figures/dynamicworld-benchmark.png" alt="DynamicWorld task coverage, 18 Android apps, four sources of change and shared airport delegations." loading="lazy"></a><figcaption>The airport example illustrates coordinated revisions across a pickup calendar, driver messages and a train shortlist. The interactive demo above explores a separate home-repair scenario.</figcaption></figure>
+      <figure class="figure"><a href="assets/figures/dynamicworld-benchmark.png"><img src="assets/figures/dynamicworld-benchmark.png" alt="DynamicWorld task coverage, 18 Android apps, four sources of change and shared airport delegations." loading="lazy"></a><figcaption>The airport example illustrates coordinated revisions across a pickup calendar, driver messages and a train shortlist. The recorded cases above include this airport scenario and three other shared scenarios.</figcaption></figure>
       <div class="benchmark-details"><div><h3>Outcomes and action constraints.</h3><p>Results must hold when each requirement applies, including after revisions and cancellation. Unauthorized actions can invalidate a task even when the final state appears correct.</p></div><div><h3>Evaluation over time.</h3><p>Programmatic checks verify app state and effects. An independent model judge evaluates open-ended content where needed. Formal scores use complete scenarios.</p></div></div>
       <div class="benchmark-links"><a class="text-link" href="https://github.com/FreedomIntelligence/OSNativeAgent/tree/main/benchmark">Scenario catalog ↗</a><a class="text-link" href="https://github.com/FreedomIntelligence/OSNativeAgent/blob/main/benchmark/suite.json">Task suite ↗</a></div>
     </section>

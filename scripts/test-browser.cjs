@@ -73,7 +73,8 @@ const assetBase = new URL('../', base.replace(/\/$/, '') + '/').href.replace(/\/
     assert(Math.abs(left.y - right.y) < 2 && right.x >= left.x + left.width, 'Agents must be side by side');
     const leftPhone = await page.locator('#native .screen-wrap').boundingBox();
     const rightPhone = await page.locator('#claw .screen-wrap').boundingBox();
-    assert(Math.abs(leftPhone.y - rightPhone.y) < 2, 'Phone screens must align');
+    assert(leftPhone.width < rightPhone.width / 2, 'Native readback must take priority over the unchanged foreground');
+    assert.equal(await page.locator('#native .visual-and-results').getAttribute('data-mode'), 'native');
     await page.screenshot({ path: path.join(output, 'comparison-desktop.png'), fullPage: true });
     assert.equal(await page.locator('.visual-stage').count(), 2);
     assert.match(await page.locator('#native .state-panel').innerText(), /35%/);
@@ -128,7 +129,7 @@ const assetBase = new URL('../', base.replace(/\/$/, '') + '/').href.replace(/\/
       if (catalog.length > 1) await page.locator(`.case-button[data-id="${id}"]`).click();
       else await page.goto(base);
       await page.waitForFunction(id => state.data?.id === id, id);
-      assert.equal(await page.locator('#score-table tbody tr').count(), 6);
+      assert.equal(await page.locator('#score-table tbody tr').count(), await page.evaluate(() => state.data.tasks.length));
       assert.equal(await page.locator('#filter').inputValue(), 'all');
     }
     await page.locator('#speed').selectOption('500');
@@ -166,12 +167,23 @@ const assetBase = new URL('../', base.replace(/\/$/, '') + '/').href.replace(/\/
     await page.screenshot({ path: path.join(output, 'comparison-mobile.png'), fullPage: true });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     assert.equal(await page.locator('.lanes .lane').count(), 2);
+    // A verified excerpt must never supply a stale phone image for later actions.
+    await page.locator('.case-button[data-id="evening_errands"]').click();
+    await page.waitForFunction(() => state.data?.id === 'evening_errands');
+    await page.getByRole('button', {name:'退款到账后的补买',exact:true}).click();
+    assert.equal(await page.locator('#native .visual-stage img').count(), 0);
+    assert(await page.locator('#native .screen-transcript').isVisible());
+    assert.match(await page.locator('#native .screen-transcript').textContent(), /RoamReady/);
+    assert.equal(await page.locator('#stage-title').textContent(), '目标订单退款到账');
+    assert.match(await page.locator('#stage-context').textContent(), /目标转换头订单/);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     assert.deepEqual(errors, []);
     assert(requests.every(url => url.startsWith('data:') || new URL(url).origin === new URL(base).origin), 'No runtime CDN or external requests');
     const result = { passed: true, cases: catalog.length, desktop: '1600 × 1100', mobile: '390 × 844',
       checks: ['six task selectors', 'task-scoped timeline', 'exact vs context badges', 'task deep-link reload',
         'verified Step 9 repair with preserved original', 'source screenshot', 'independent step navigation', 'deep-link reload', 'image dialog',
         'untrusted trace rendered as text', 'case switching', 'filters', 'play/pause/end', 'merged opening and legacy link',
+        'verified excerpt boundary and original UI text', 'readable event context',
         'no horizontal overflow', 'zero browser errors', 'no external requests'] };
     fs.writeFileSync(path.join(output, 'browser-validation.json'), JSON.stringify(result, null, 2) + '\n');
     console.log(JSON.stringify(result, null, 2));

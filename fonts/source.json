@@ -3,7 +3,7 @@
   "download": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
   "source_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
   "license": "SIL OFL 1.1",
-  "derivation": "fontTools subset of all UI and selected trace characters; renamed Trajectory Sans",
-  "characters": 1144,
-  "output_sha256": "42d5ff4159c42b718dfefdd689fc548cca67d23419aa1a575c82c54b9a805402"
+  "derivation": "fontTools subset of UI and decoded observations from four GPT-5.4 traces; renamed Trajectory Sans",
+  "characters": 1115,
+  "output_sha256": "3c60f743d5ff77c9e4fb89244f45a5d5b91021e2d653396f9075f3f604f56f7e"
 }

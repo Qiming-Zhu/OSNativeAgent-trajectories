@@ -1,7 +1,7 @@
 /* Read-only static viewer. Trace content is always rendered as text, never HTML. */
 "use strict";
 const $ = (selector, root = document) => root.querySelector(selector);
-const state = {catalog: [], data: null, stage: null, task: "all", positions: {native: 0, claw: 0}, filter: "all", timer: null, loading: 0};
+const state = {catalog: [], guides: {}, data: null, stage: null, task: "all", positions: {native: 0, claw: 0}, filter: "all", timer: null, loading: 0};
 const kinds = {native: "NATIVE STEP", planner: "PLANNER", result: "TOOL RESULT", gui: "GUI ACTION", input: "INPUT", reply: "REPLY", question: "ASK USER", status: "STATUS"};
 const prefetched = new Set();
 function preloadFrames(lane, index) {
@@ -116,6 +116,7 @@ function stageLabel(node) {
 function nodeContext(node) {
   if (node.source_events) return node.source_events.map(event => `${event.at.slice(11,16)} · ${event.kind === "user_turn" ? "用户委托" : "短信背景"}\n${nodeContext(event)}`).join("\n\n");
   if (node.message) return node.message;
+  if (state.data.stage_contexts?.[node.id]) return state.data.stage_contexts[node.id];
   return (node.inject || []).map(item => {
     const p = item.parameters;
     if (p.content || p.body) return `${p.sender_name ? `${p.sender_name}：` : ""}${p.content || p.body}`;
@@ -142,11 +143,11 @@ function renderStages() {
   $("#stage-context").classList.toggle("combined-context", Boolean(node.source_events));
   $("#stage-raw").textContent = pretty(node.source_events || {id: node.id, at: node.at, kind: node.kind, ...(node.message ? {message: node.message} : {inject: node.inject})});
   const highlightRoot = $("#highlights"); highlightRoot.replaceChildren();
-  if (state.data.id === "home_repair" && state.data.lanes.native.replay_note) {
-    for (const [label,index,clawIndex] of [["关闭前",6,10],["关闭后",8,14],["维修完成",102,236],["恢复结果",105,237]]) {
+  if (state.guides[state.data.id]) {
+    for (const {title: label, native: index, claw: clawIndex} of state.guides[state.data.id]) {
       const target = state.data.lanes.native.steps.find(s => s.index === index);
       highlightRoot.append(button(label, "highlight replay-jump", () => {
-        state.filter = "all"; $("#filter").value = "all";
+        state.filter = "all"; state.task = 'all'; $("#filter").value = "all";
         selectStage(target.stage);
         state.positions.native = filtered("native").findIndex(s => s.index === index);
         const candidates = filtered("claw");
@@ -191,8 +192,13 @@ function renderVisual(key, step) {
   preloadFrames(state.data.lanes[key], step?.index || 0);
   const stageIndex = state.data.stages.findIndex(s => s.id === state.stage);
   const past = step ? all.filter(s => s.index <= step.index) : all.filter(s => state.data.stages.findIndex(n => n.id === s.stage) < stageIndex);
-  const lastImage = past.findLast(s => s.image) || state.data.lanes[key].initial_image;
+  const lane = state.data.lanes[key];
+  const outsideCapture = lane.capture_available_through_step !== undefined &&
+    (step?.index || past.at(-1)?.index || 0) > lane.capture_available_through_step;
+  const lastImage = outsideCapture ? null : past.findLast(s => s.image) || lane.initial_image;
   const visual = el("section", "visual-stage");
+  const mode = Observations.mode(step);
+  visual.append(el('p', 'capture-label', key === 'native' && mode !== 'gui' ? '前台画面 · 原生操作无需切换页面' : '手机画面'));
   if (lastImage) {
     const retained = lastImage !== step;
     const shown = retained ? {...lastImage, point: null} : lastImage;
@@ -200,8 +206,25 @@ function renderVisual(key, step) {
     visual.dataset.imageStep = String(lastImage.index);
     visual.dataset.captureKind = lastImage.image_capture_kind || "archived";
     visual.dataset.retained = String(retained);
+    const captureNames = {continuous_action_replay: '保存动作回放采集', archived_after_action: '原运行 · 动作后截图', archived_observation: '原运行 · 最近观察', verified_prefix_replay: '保存动作回放补采', verified_action_replay: '保存动作回放采集'};
+    visual.append(el('p', 'capture-source', `${captureNames[lastImage.image_capture_kind] || '保存的手机截图'} · Step ${lastImage.index}${retained ? ' · 沿用最近画面' : ''}`));
   } else {
-    visual.append(el("p", "capture-pending", "此案例尚未补录手机画面；现有动作与状态记录保留在旁边。"));
+    visual.append(el("p", "capture-pending", outsideCapture ? "此步骤没有核对通过的补采截图。下方为原运行记录的界面文字。" : "此步骤没有手机截图；动作与状态以原运行记录为准。"));
+    if (mode === 'gui') {
+      const texts = new Set();
+      for (const action of step?.actions || []) {
+        if (!action.name.startsWith('gui_')) continue;
+        let result; try { result = JSON.parse(step.results?.find(r => r.call_id === action.call_id)?.text); } catch { continue; }
+        for (const item of result?.data?.nodes || []) if (item.text) texts.add(item.text);
+      }
+      if (texts.size) {
+        const transcript = el('div', 'screen-transcript');
+        transcript.append(el('h5', '', '原运行界面文字'));
+        for (const text of texts) transcript.append(el('p', '', text));
+        visual.append(transcript);
+      } else if (outsideCapture) visual.lastChild.textContent = '此步骤没有核对通过的补采截图；原运行的动作与返回仍可查看。';
+    }
+    if (key === 'native' && mode !== 'gui') visual.hidden = true;
   }
 
   const evidence = Observations.collect(past);
@@ -242,7 +265,42 @@ function renderVisual(key, step) {
     panel.append(el("b", "monitor-heading", "监听"));
     for (const m of monitors) panel.append(el("p", "monitor-state", `${m.name.replace("com.dynamicworld.", "")} · ${m.state} · Step ${m.index}`));
   }
-  const group = el("div", "visual-and-results"); group.append(visual, panel); return group;
+  const group = el("div", `visual-and-results ${key === 'native' && mode !== 'gui' ? 'background-action' : 'screen-action'}`); group.dataset.mode = mode;
+  group.append(visual, panel); return group;
+}
+function renderReadback(step) {
+  const records = Observations.records(step);
+  if (!records.length) return null;
+  const root = el('section', 'recorded-readback');
+  root.append(el('h5', '', '原运行工具读回'));
+  for (const record of records) {
+    const block = el('div', 'recorded-record');
+    block.append(el('code', 'readback-name', record.name));
+    const data = record.data;
+    if (record.name === 'search_calendar_event' && data.events) {
+      const events = Array.isArray(data.events) ? data.events : [data.events];
+      for (const event of events) {
+        const card = el('div', 'calendar-readback');
+        card.append(el('strong', '', event.title));
+        const format = stamp => new Intl.DateTimeFormat('zh-CN', {timeZone: event.time_zone || 'Asia/Shanghai', month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(stamp));
+        const location = typeof event.location === 'object' ? event.location?.location : event.location;
+        for (const [label,value] of [['开始',format(event.start_time)],['结束',format(event.end_time)],['地点',location],['状态',event.status],['版本',event.resource_version]]) {
+          const row = el('div', 'calendar-field'); row.append(el('span','',label),el('b','',String(value))); card.append(row);
+        }
+        card.append(el('small', 'calendar-record-id', event.event_id)); block.append(card);
+      }
+      root.append(block); continue;
+    }
+    const entries = data && !Array.isArray(data) && typeof data === 'object' ? Object.entries(data) : [['result', data]];
+    for (const [key, value] of entries) {
+      if (value === '' || (Array.isArray(value) && !value.length)) continue;
+      const row = el('div', 'readback-row');
+      row.append(el('span', 'readback-key', key), el('pre', 'readback-value', pretty(value)));
+      block.append(row);
+    }
+    root.append(block);
+  }
+  return root;
 }
 function actionCard(action, results) {
   const card = el("div", "action-card");
@@ -300,7 +358,7 @@ function renderLane(key) {
     empty.append(copy); content.prepend(empty); return;
   }
   const body = el("div", "step-body"), meta = el("div", "step-meta");
-  meta.append(el("span", "kind", `STEP ${step.index}`));
+  meta.append(el("span", "kind", `STEP ${step.index}`), el('span', 'execution-mode', ({gui: 'GUI 操作', native: '原生接口', context: '事件与任务上下文'})[Observations.mode(step)]));
   body.append(meta, el("h4", "step-title", Observations.title(step)));
   body.append(taskBadges(step));
   const rationale = step.kind === "gui" ? step.model_output?.split(/```|\nAction:/)[0]?.replace(/^Thought:\s*/, "").trim() : "";
@@ -327,7 +385,9 @@ function renderLane(key) {
     source: step.source, image_role: step.image_role, image_capture_kind: step.image_capture_kind,
     image_observation_source: step.image_observation_source, task_attribution: step.task_attribution, replay: step.replay, ...(step.image_sha256 ? {image_sha256: step.image_sha256} : {})}));
   const execution = el("div", "execution-panel");
-  execution.append(body, visual.querySelector(".state-panel"), raw); visual.append(execution);
+  execution.append(body, visual.querySelector(".state-panel"));
+  const readback = renderReadback(step); if (readback) execution.append(readback);
+  execution.append(raw); visual.append(execution);
   const active = $(".step-chip.active", strip);
   if (active) strip.scrollLeft = active.offsetLeft - strip.offsetLeft - strip.clientWidth / 2;
 }
@@ -373,7 +433,7 @@ function selectStage(id) {
 function renderAbout() {
   const root = $("#about"); root.replaceChildren();
   root.append(el("p", "", "任务标签：实线表示原始委托或会话可确认的归属；虚线表示相关事件上下文，不代表独占归属。AppFunction 可改变 App 状态而不切换前台，结果以读回记录为准。"));
-  root.append(el("p", "", "按保存的动作顺序执行，随时间线重现消息与设备变化，再采集每步手机画面。回放使用已有决策，不重新调用模型；结果沿用原运行。"));
+  root.append(el("p", "", "两侧使用 GPT-5.4 的保存轨迹，按场景事件对齐。截图来源标在画面旁；回放补采使用保存的动作，结果沿用原运行。展示步数与播放速度不用于比较执行效率。"));
   for (const note of state.data.notes || []) root.append(el("p", "", note));
   const columns = el("div", "provenance");
   for (const key of ["native", "claw"]) {
@@ -420,13 +480,15 @@ async function loadCase(id, params = null) {
     const safePosition = v => /^\d+$/.test(v || "") ? Math.min(Number(v), 1000000) : 0;
     state.positions = {native: safePosition(params?.get("n")), claw: safePosition(params?.get("c"))};
     $("#case-title").textContent = data.title;
+    $('#case-description').textContent = data.description;
+    $('.outcomes > summary').textContent = `查看 ${data.tasks.length} 项任务的原运行结果`;
     document.title = `${data.title} · OS-native Agents Demo`;
     document.querySelectorAll(".case-button").forEach(b => { b.classList.toggle("active", b.dataset.id === id); b.setAttribute("aria-pressed", String(b.dataset.id === id)); });
     $("#workspace").hidden = false;
     renderStages(); renderLane("native"); renderLane("claw"); renderAbout(); renderScores(); syncHash();
   } catch (error) {
     if (request !== state.loading) return;
-    $("#error").textContent = `无法载入轨迹：${error.message}\n请从 HTTP 静态服务器打开导出的 dist 目录。`;
+    $("#error").textContent = `轨迹暂时无法载入，请刷新页面重试。\n${error.message}`;
     $("#error").hidden = false;
   }
 }
@@ -449,6 +511,7 @@ window.addEventListener("hashchange", () => {
 (async () => {
   try {
     state.catalog = await fetchJSON("data/catalog.json");
+    try { state.guides = await fetchJSON('data/viewer-guides.json'); } catch { state.guides = {}; }
     for (const [i, item] of state.catalog.entries()) {
       const b = button("", "case-button", () => loadCase(item.id)); b.dataset.id = item.id;
       const text = el("span"); text.append(el("b", "", item.title), el("small", "", item.subtitle));
@@ -457,5 +520,5 @@ window.addEventListener("hashchange", () => {
     const params = new URLSearchParams(location.hash.slice(1));
     const id = state.catalog.some(c => c.id === params.get("scene")) ? params.get("scene") : state.catalog[0].id;
     await loadCase(id, params);
-  } catch (error) { $("#error").hidden = false; $("#error").textContent = `请先运行导出脚本，再从 HTTP 服务器打开 dist 目录。\n${error.message}`; }
+  } catch (error) { $("#error").hidden = false; $("#error").textContent = `轨迹暂时无法载入，请刷新页面重试。\n${error.message}`; }
 })();

@@ -4,14 +4,14 @@ This repository contains the paper homepage and interactive trajectory demo for 
 
 ## Pages and source
 
-- `index.html`, `home.css`, `home.js`: paper homepage, model-result comparison and citation.
-- `demo/index.html`: interactive home-repair trajectory viewer.
+- `index.html`, `home.css`, `home.js`, `stories.js`: paper homepage, recorded cases, results and citation.
+- `demo/index.html`: interactive comparison across four GPT-5.4 scenarios.
 - `app.js`, `observations.js`, `style.css`: trajectory viewer.
-- `data/home_repair.json`, `data/catalog.json`, `assets/*.png`: retained trajectory data and images.
+- `data/catalog.json`, the four scenario JSON files and `assets/*.png`: recorded trajectories and captured phone screens.
 - `data/dynamicworld-results.json`: Tables 3–5 data, shared with the code repository.
-- `assets/figures/`: paper figures and screenshots of the trajectory viewer, shared with the code repository.
-- `data/showcase.json`: selected viewer steps and screenshot provenance.
-- `data/original-export-manifest.json`: original trajectory export provenance.
+- `assets/figures/`: paper figures and screenshots of the homepage observation panels, shared with the code repository.
+- `data/stories.json`, `data/showcase.json`: selected observations, deep links and screenshot provenance.
+- `data/original-export-manifest.json`, `data/additional-export-manifest.json`: original and additional trajectory export provenance.
 - `manifest.json`: retained trajectory provenance plus current presentation-file hashes.
 
 The Android apps, agent runtime, task suite, and evaluator are available in the [code repository](https://github.com/FreedomIntelligence/OSNativeAgent).
@@ -35,14 +35,14 @@ After updating site files, run:
 python3 scripts/update-manifest.py
 ```
 
-This checks the original trajectory assets and refreshes presentation hashes.
+This checks both trajectory exports and their captured images, then refreshes presentation hashes.
 
 <!-- When updating published results, copy data/dynamicworld-results.json from
 the code repository and update the static fallback tables in index.html. -->
 
 ## Browser checks
 
-Install Playwright in a development environment and make Chromium available. Run `node scripts/test-home.cjs` for the homepage and its Demo links, then `SHOWCASE_URL=http://127.0.0.1:8766/demo node scripts/test-browser.cjs` for the viewer. Optional `PLAYWRIGHT_MODULE` and `CHROMIUM_PATH` select an existing installation. Screenshots go to ignored `preview/`.
+Install Playwright in a development environment and make Chromium available. Run `node scripts/test-home.cjs` for the homepage and its Demo links, `node scripts/test-layout.cjs` for responsive layouts and loading fallbacks, then `SHOWCASE_URL=http://127.0.0.1:8766/demo node scripts/test-browser.cjs` for the viewer. Optional `PLAYWRIGHT_MODULE` and `CHROMIUM_PATH` select an existing installation. Screenshots go to ignored `preview/`.
 
 ## Deployment
 

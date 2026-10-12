@@ -1,143 +1,92 @@
 {
-  "description": "Screenshots of the local trajectory viewer, showing selected steps from saved runs. Capture kinds and source image hashes are retained below.",
+  "description": "Actual homepage observation panels for four GPT-5.4 scenarios. Screenshots and native readbacks are linked to their saved source steps.",
   "examples": [
     {
-      "task": "v4_t031",
-      "title": "Lamp repair",
-      "description": "Restore the original brightness after repair.",
-      "native": 105,
-      "claw": 237,
-      "thumbnail": "assets/figures/demo-t031.png",
-      "href": "demo/#scene=home_repair&stage=maya_repair_complete&filter=all&n=6&c=3&task=v4_t031",
-      "stage": "maya_repair_complete",
-      "images": {
-        "native": {
-          "path": "assets/602ac7380d631ed361fdfdbcfe4839e445a1bd8ea96d17513bf20f3a38b2d836.png",
-          "sha256": "602ac7380d631ed361fdfdbcfe4839e445a1bd8ea96d17513bf20f3a38b2d836",
+      "scene": "home_repair",
+      "title": "Home repair",
+      "description": "Temporary access for a helper",
+      "task": "T036",
+      "native": 65,
+      "href": "demo/#scene=home_repair&stage=establish_c30&filter=all&n=11&c=42",
+      "thumbnail": "assets/figures/demo-home_repair.png",
+      "thumbnail_sha256": "dbff8bef3afa93a417430ea166d3e7fa5e38d20810c85102b9ea09f6da36a0e2",
+      "source_data_sha256": "f37403b795f89a859b1dbadb044ca880f13daecb4b1673e743c45d9975f3b053",
+      "images": [
+        {
+          "step": 62,
+          "path": "assets/460fa446e501be2cda3b5855240c964af0048cb3855b817215a456e7e1fb737e.png",
+          "sha256": "460fa446e501be2cda3b5855240c964af0048cb3855b817215a456e7e1fb737e",
           "capture_kind": "continuous_action_replay"
         },
-        "claw": {
-          "path": "assets/8f2aaf7c316512ac048bc031bcf176294f92c99ff1e437f44ff2f703ce765f4a.png",
-          "sha256": "8f2aaf7c316512ac048bc031bcf176294f92c99ff1e437f44ff2f703ce765f4a",
-          "capture_kind": "archived_after_action"
+        {
+          "step": 65,
+          "path": "assets/8aa9f7cbbd5bca547c29e17eaa2bfe08664d26085ae72f34f8ee0ccf094df413.png",
+          "sha256": "8aa9f7cbbd5bca547c29e17eaa2bfe08664d26085ae72f34f8ee0ccf094df413",
+          "capture_kind": "continuous_action_replay"
         }
-      },
-      "thumbnail_sha256": "cd4f58a71bd92f665e3069448b7f07a1a5419ec5ad9e5a3063e921559d6967fd"
+      ]
     },
     {
-      "task": "v4_t032",
-      "title": "Thermostat reconnection",
-      "description": "Resume the task when the device comes back online.",
-      "native": 119,
-      "claw": 253,
-      "thumbnail": "assets/figures/demo-t032.png",
-      "href": "demo/#scene=home_repair&stage=thermostat_online&filter=all&n=7&c=6&task=v4_t032",
-      "stage": "thermostat_online",
-      "images": {
-        "native": {
-          "path": "assets/db6c00a8ab0f2f62a3f56a143e2e374827d3f2cfdaf91c2bb3cb98b5f36cb407.png",
-          "sha256": "db6c00a8ab0f2f62a3f56a143e2e374827d3f2cfdaf91c2bb3cb98b5f36cb407",
-          "capture_kind": "continuous_action_replay"
-        },
-        "claw": {
-          "path": "assets/240779f40aec3bd590b5009ad180fa84227fc6898a39bec41fcb5fc773639b43.png",
-          "sha256": "240779f40aec3bd590b5009ad180fa84227fc6898a39bec41fcb5fc773639b43",
-          "capture_kind": "archived_after_action"
-        }
-      },
-      "thumbnail_sha256": "4625852ded36e766e21598b666c1846db5d88bcee9378e43543a5845c104b82e"
+      "scene": "airport_coordination",
+      "title": "Airport coordination",
+      "description": "Keep an airport pickup up to date",
+      "task": "T054",
+      "native": 30,
+      "href": "demo/#scene=airport_coordination&stage=inbound_delayed&filter=all&n=7&c=0",
+      "thumbnail": "assets/figures/demo-airport_coordination.png",
+      "thumbnail_sha256": "8df6d4753a2b994c3db8799bdb2a56547c1453fa370c1c3d9f0f11f92fcb3d57",
+      "source_data_sha256": "91fe7b691a0fd6e44ed0fba3a4b6faf131cefc868818b250a11cc2eee4e72729",
+      "images": []
     },
     {
-      "task": "v4_t033",
-      "title": "Repair verification",
-      "description": "Check the technician’s claim against device state.",
-      "native": 88,
-      "claw": 208,
-      "thumbnail": "assets/figures/demo-t033.png",
-      "href": "demo/#scene=home_repair&stage=technician_message&filter=all&n=2&c=0&task=v4_t033",
-      "stage": "technician_message",
-      "images": {
-        "native": {
-          "path": "assets/9d18aab4ebf3a8c682a5e2ffd06828e0a49fdbca37484fcba3c12ef866ca65e9.png",
-          "sha256": "9d18aab4ebf3a8c682a5e2ffd06828e0a49fdbca37484fcba3c12ef866ca65e9",
-          "capture_kind": "continuous_action_replay"
+      "scene": "evening_errands",
+      "title": "Evening orders",
+      "description": "Update a delivery address",
+      "task": "T073",
+      "native": 21,
+      "href": "demo/#scene=evening_errands&stage=establish_address&filter=all&n=8&c=9",
+      "thumbnail": "assets/figures/demo-evening_errands.png",
+      "thumbnail_sha256": "f246072625c41c713354ceccc41b84b33d6e0fd6548e7cf7597d9f1668fcbadd",
+      "source_data_sha256": "08bdab10398ef279ff15d4f4bc14cfadcb5c4245acbd97472ea12880ca5e4be6",
+      "images": [
+        {
+          "step": 19,
+          "path": "assets/67e3ca5b154429f8397a6b0fa5ac8344f5592cbf2ff25d9d4b829db19a030a48.png",
+          "sha256": "67e3ca5b154429f8397a6b0fa5ac8344f5592cbf2ff25d9d4b829db19a030a48",
+          "capture_kind": "verified_prefix_replay"
         },
-        "claw": {
-          "path": "assets/f10e85463f48daf2ee2611e429fc3d79725265570a73513e1c728162624f03f4.png",
-          "sha256": "f10e85463f48daf2ee2611e429fc3d79725265570a73513e1c728162624f03f4",
-          "capture_kind": "archived_observation"
+        {
+          "step": 21,
+          "path": "assets/6951e398fd5a70d37b331e54da148502a0aebe0ce3770ebf39dca2520622f27a.png",
+          "sha256": "6951e398fd5a70d37b331e54da148502a0aebe0ce3770ebf39dca2520622f27a",
+          "capture_kind": "verified_prefix_replay"
         }
-      },
-      "thumbnail_sha256": "a7a21f9c1b8d45dcedcbfe33a85f45c6bf4eca5c9a007fe20edb63af9fed4c6c"
+      ]
     },
     {
-      "task": "v4_t034",
-      "title": "Deferred lighting",
-      "description": "Finish offline work without undoing later manual changes.",
-      "native": 131,
-      "claw": 281,
-      "thumbnail": "assets/figures/demo-t034.png",
-      "href": "demo/#scene=home_repair&stage=hallway_recovers&filter=all&n=4&c=18&task=v4_t034",
-      "stage": "hallway_recovers",
-      "images": {
-        "native": {
-          "path": "assets/978b87c528b83139e00274b76c6b2ee35a2771903bc629c308c00a46cf9e84e8.png",
-          "sha256": "978b87c528b83139e00274b76c6b2ee35a2771903bc629c308c00a46cf9e84e8",
+      "scene": "cross_district_course",
+      "title": "Course planning",
+      "description": "Confirm and cancel a class",
+      "task": "T086–T087",
+      "native": 56,
+      "href": "demo/#scene=cross_district_course&stage=official_course_cancelled&filter=all&n=7&c=10",
+      "thumbnail": "assets/figures/demo-cross_district_course.png",
+      "thumbnail_sha256": "bf1c531c4ce3705d9bd993832b60a7af36d78f8f5fb00368a3a252170d0755e3",
+      "source_data_sha256": "147cab03e11dd9a2e4fb0fef8d48594fd6f29cd18ec561d586dbc91b5172214c",
+      "images": [
+        {
+          "step": 42,
+          "path": "assets/fd57063d5bf38b742dfb5806f881566d04dc0759dd20cf9297559b8c6ba23c03.png",
+          "sha256": "fd57063d5bf38b742dfb5806f881566d04dc0759dd20cf9297559b8c6ba23c03",
           "capture_kind": "continuous_action_replay"
         },
-        "claw": {
-          "path": "assets/5aa9061f0c1f7537b0e147d55a1042a08b808ced0f02ca51e4cd60ba8494148d.png",
-          "sha256": "5aa9061f0c1f7537b0e147d55a1042a08b808ced0f02ca51e4cd60ba8494148d",
-          "capture_kind": "archived_after_action"
-        }
-      },
-      "thumbnail_sha256": "7d323f62cc618c12737df84589da3dcb2ee2d69d107e85a1248174ab0037d796"
-    },
-    {
-      "task": "v4_t035",
-      "title": "Partial cancellation",
-      "description": "Stop one part of a delegation while preserving the rest.",
-      "native": 95,
-      "claw": 220,
-      "thumbnail": "assets/figures/demo-t035.png",
-      "href": "demo/#scene=home_repair&stage=maya_arrived_home&filter=all&n=2&c=3&task=v4_t035",
-      "stage": "maya_arrived_home",
-      "images": {
-        "native": {
-          "path": "assets/d50d34b75c98f663cdcbc233fdf7fc180fc81e8d0c8d010709108484ee952815.png",
-          "sha256": "d50d34b75c98f663cdcbc233fdf7fc180fc81e8d0c8d010709108484ee952815",
+        {
+          "step": 56,
+          "path": "assets/402f6f89f77bac8909ea069e64903169577bfb18b41353b9496d2f6ac4d17bf8.png",
+          "sha256": "402f6f89f77bac8909ea069e64903169577bfb18b41353b9496d2f6ac4d17bf8",
           "capture_kind": "continuous_action_replay"
-        },
-        "claw": {
-          "path": "assets/2404439c231499397b4031061be9a4abb9d6d500e94638d0d9261bf01921a887.png",
-          "sha256": "2404439c231499397b4031061be9a4abb9d6d500e94638d0d9261bf01921a887",
-          "capture_kind": "archived_after_action"
         }
-      },
-      "thumbnail_sha256": "6432c7ddc42e203283f71abf95e91fd2ddd872965e672fc467f01e7108b00b39"
-    },
-    {
-      "task": "v4_t036",
-      "title": "Temporary access",
-      "description": "Revoke the helper’s access when the work is finished.",
-      "native": 138,
-      "claw": 322,
-      "thumbnail": "assets/figures/demo-t036.png",
-      "href": "demo/#scene=home_repair&stage=helper_finished&filter=all&n=3&c=20&task=v4_t036",
-      "stage": "helper_finished",
-      "images": {
-        "native": {
-          "path": "assets/5ecdb411dacbfe4d1dee3a37bd5dd2254b4bb0b9f498eb078aa93519dcb98328.png",
-          "sha256": "5ecdb411dacbfe4d1dee3a37bd5dd2254b4bb0b9f498eb078aa93519dcb98328",
-          "capture_kind": "continuous_action_replay"
-        },
-        "claw": {
-          "path": "assets/f0d2dbe14482f9a569ce4d77c85d7487bda0acea0458e145b1bd3ce882776d47.png",
-          "sha256": "f0d2dbe14482f9a569ce4d77c85d7487bda0acea0458e145b1bd3ce882776d47",
-          "capture_kind": "archived_after_action"
-        }
-      },
-      "thumbnail_sha256": "0857b9390271da405e047d218714f1e1cafadb7fd629a98565d6a42cc606deca"
+      ]
     }
   ]
 }

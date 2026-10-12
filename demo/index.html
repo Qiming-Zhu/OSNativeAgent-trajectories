@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Compare OS-native Agent and MobileClaw on six ongoing home-repair tasks. Explore the shared timeline, phone screenshots, recorded tool calls and original outcomes.">
+  <meta name="description" content="Explore GPT-5.4 trajectories across home repair, airport coordination, evening orders and course planning. Compare GUI actions, native calls and original outcomes.">
   <meta property="og:title" content="OS-native Agents · Interactive Demo">
-  <meta property="og:description" content="A home-repair scenario with six ongoing tasks, recorded agent trajectories and verifiable app state.">
+  <meta property="og:description" content="Four GPT-5.4 scenarios with GUI actions, native calls, recorded observations and original task outcomes.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://qiming-zhu.github.io/OSNativeAgent-trajectories/demo/">
   <meta property="og:image" content="https://qiming-zhu.github.io/OSNativeAgent-trajectories/assets/figures/os-native-framework.png">
@@ -22,8 +22,9 @@
 <body>
   <header class="topbar"><a class="brand" href="./"><span class="brand-icon">Ⅱ</span> OS-native / Demo</a><a href="https://github.com/FreedomIntelligence/OSNativeAgent" class="manifest-link" target="_blank" rel="noreferrer">GitHub ↗</a></header>
   <main>
+    <noscript><p>交互轨迹需要 JavaScript。可先<a href="./#demo">查看项目主页中的截图与实验结果</a>。</p></noscript>
     <nav id="cases" class="case-list" aria-label="选择场景"></nav>
-    <section class="case-heading"><div><h1 id="case-title">正在载入轨迹…</h1></div><button id="about-toggle" class="quiet" aria-expanded="false" aria-controls="about">阅读方式与来源</button></section>
+    <section class="case-heading"><div><p class="viewer-kicker">GPT-5.4 · OS-native / MobileClaw</p><h1 id="case-title">正在载入轨迹…</h1><p id="case-description"></p></div><button id="about-toggle" class="quiet" aria-expanded="false" aria-controls="about">阅读方式与来源</button></section>
     <section id="about" class="about" hidden></section>
     <section class="task-overview" aria-label="场景内的任务"><div class="task-heading"><strong id="task-count"></strong></div><nav id="tasks" aria-label="按任务查看"></nav><p id="task-request" hidden></p></section>
     <div id="error" class="error" role="alert" hidden></div>
@@ -31,7 +32,7 @@
       <aside class="timeline"><div class="timeline-heading"><span>时间线</span><span id="stage-count"></span></div><div id="stages" class="stages" role="navigation" aria-label="场景事件"></div></aside>
       <div class="comparison">
         <section class="context"><div class="context-top"><span id="stage-tag" class="eyebrow"></span></div><h3 id="stage-title"></h3><p id="stage-context"></p><details><summary>事件详情</summary><pre id="stage-raw"></pre></details></section>
-        <div id="highlights" class="highlights" aria-label="精选节点" hidden></div>
+        <div id="highlights" class="highlights" aria-label="精选节点"></div>
         <div class="transport"><div class="playback"><button id="back" title="两侧分别后退一步（←）" aria-label="两侧分别后退一步">←</button><button id="play" class="play" aria-label="播放两侧步骤">▶ 播放</button><button id="forward" title="两侧分别前进一步（→）" aria-label="两侧分别前进一步">→</button><select id="speed" aria-label="播放速度"><option value="2000">0.5 step/s</option><option value="1000">1 step/s</option><option value="500">2 step/s</option></select></div><span class="sync-note">连续播放 · 按事件对齐</span><label class="filter-label">显示 <select id="filter"><option value="all">全部步骤</option><option value="actions">执行动作</option><option value="conversation">输入与回复</option></select></label></div>
         <div class="lanes"><article id="native" class="lane native" aria-label="OS-native Agent 轨迹"></article><article id="claw" class="lane claw" aria-label="MobileClaw 轨迹"></article></div>
         <details class="outcomes"><summary>查看 6 项任务结果</summary><div id="score-table"></div></details>

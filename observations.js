@@ -46,6 +46,10 @@ const Observations = (() => {
     return {devices: [...devices.values()], monitors: [...monitors.values()]};
   }
   function title(step) {
+    if (step.actions?.length === 1 && step.actions[0].name === 'call_device_tool') {
+      const name = step.actions[0].arguments.toolName;
+      return ({search_calendar_event:'读取日历记录',create_calendar_event:'创建日历事件',modify_calendar_event:'更新日历事件',delete_calendar_event:'取消日历事件',search_notes:'查询笔记',create_note:'创建笔记',modify_note:'更新笔记',send_message:'发送短信'})[name] || name;
+    }
     const names = {os_search_tools: "查找可用能力", os_task_list: "查看委托列表", os_session_read: "回看相关会话", system_apps_list: "查看手机应用", system_app_open: "打开手机应用", gui_scroll: "滚动手机页面", get_contact_tool_schema: "查看操作接口", os_task_create: "保存委托与后续条件", os_task_read: "取回之前的委托", os_task_update: "更新委托进度", os_monitor_register: "注册变化监听", os_monitor_remove: "撤销监听", os_monitor_list: "检查已注册监听", notify_user: "向用户发送通知", ask_user_question: "向用户确认具体要求", gui_observe: "查看手机页面", gui_click: "点击手机页面", gui_set_text: "在手机中输入文字", skill: "读取操作说明"};
     if (!step.actions?.length) {
       const action = step.details?.action;
@@ -89,7 +93,7 @@ const Observations = (() => {
     const result = parse(results?.find(r => r.call_id === action.call_id)?.text);
     const args = action.arguments || {};
     const parameters = Object.entries(args).filter(([k]) => !['markdown','summary','expected_version','expected_revision','task_ids'].includes(k));
-    const code = one(result?.data?.code);
+    const code = one(result?.data?.code ?? result?.data?.details?.code);
     const rows = Array.isArray(result?.data?.data) ? result.data.data : [];
     let outcome = result ? `返回：${result.status || '已收到'}` : '没有关联的返回记录';
     if (result?.status === 'success') {
@@ -102,8 +106,30 @@ const Observations = (() => {
       else if (action.name === 'os_monitor_remove') outcome = result.data?.removed === true ? '监听已撤销' : '返回成功，未确认撤销';
       else outcome = '工具返回成功';
     }
-    return {name: action.name, parameters, outcome};
+    const business = result?.data?.details?.result;
+    if (business && ['failed', 'error', 'rejected'].includes(one(business.status))) outcome = `操作未完成：${one(business.error) || one(business.status)}`;
+    return {name: action.name === 'call_device_tool' ? args.toolName : action.name,
+      parameters: action.name === 'call_device_tool' ? Object.entries(args.arguments || {}) : parameters, outcome};
   }
-  return {collect, title, explain, toolCall};
+  function mode(step) {
+    if (step?.kind === 'gui' || step?.actions?.some(a => a.name.startsWith('gui_') || a.name === 'system_app_open')) return 'gui';
+    if (step?.actions?.some(a => a.name.startsWith('app_') || a.name === 'call_device_tool')) return 'native';
+    return 'context';
+  }
+  function records(step) {
+    const collected = [];
+    for (const action of step?.actions || []) {
+      if (!action.name.startsWith('app_') && action.name !== 'call_device_tool') continue;
+      const result = parse(step.results?.find(r => r.call_id === action.call_id)?.text);
+      if (!result) continue;
+      const data = result.data?.details?.result ?? result.data?.data;
+      if (!data) continue;
+      const unwrap = value => Array.isArray(value) ? (value.length === 1 ? unwrap(value[0]) : value.map(unwrap)) :
+        value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).map(([k,v]) => [k, unwrap(v)])) : value;
+      collected.push({name: action.arguments?.toolName || action.name.replace(/_[a-f0-9]{8}$/, ''), data: unwrap(data)});
+    }
+    return collected;
+  }
+  return {collect, title, explain, toolCall, mode, records};
 })();
 if (typeof module !== "undefined") module.exports = Observations;

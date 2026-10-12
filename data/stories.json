@@ -1,0 +1,572 @@
+{
+  "model": "GPT-5.4",
+  "stories": [
+    {
+      "id": "home_repair",
+      "title": "Home repair",
+      "heading": "Temporary access for a helper",
+      "apps": "SmartHome · QQ",
+      "task": "T036",
+      "count": 6,
+      "request": "Let Li Si control only the study lamp while he helps. When he says he is finished, remove that access. Leave everyone else’s permissions alone.",
+      "default": 1,
+      "moments": [
+        {
+          "label": "Find the helper",
+          "caption": "The agent opens household settings through the GUI.",
+          "step": 62,
+          "stage": "establish_c30",
+          "href": "demo/#scene=home_repair&stage=establish_c30&filter=all&n=8&c=39",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/460fa446e501be2cda3b5855240c964af0048cb3855b817215a456e7e1fb737e.png",
+          "capture_kind": "continuous_action_replay",
+          "image_sha256": "460fa446e501be2cda3b5855240c964af0048cb3855b817215a456e7e1fb737e",
+          "source": [
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/assistant_messages/7",
+              "event_seq": 446
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/tool_calls/11",
+              "event_seq": 447
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/tool_results/11",
+              "event_seq": 448
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/tool_results/16",
+              "event_seq": 555
+            }
+          ]
+        },
+        {
+          "label": "Grant limited access",
+          "caption": "Only the study-lamp permission is enabled for Li Si.",
+          "step": 65,
+          "stage": "establish_c30",
+          "href": "demo/#scene=home_repair&stage=establish_c30&filter=all&n=11&c=42",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/8aa9f7cbbd5bca547c29e17eaa2bfe08664d26085ae72f34f8ee0ccf094df413.png",
+          "capture_kind": "continuous_action_replay",
+          "image_sha256": "8aa9f7cbbd5bca547c29e17eaa2bfe08664d26085ae72f34f8ee0ccf094df413",
+          "source": [
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/assistant_messages/10",
+              "event_seq": 552
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/tool_calls/14",
+              "event_seq": 553
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c30/evaluator/stage_trajectory/tool_results/15",
+              "event_seq": 554
+            }
+          ]
+        },
+        {
+          "label": "Remove access",
+          "caption": "After the completion message, the agent switches the permission off.",
+          "step": 138,
+          "stage": "helper_finished",
+          "href": "demo/#scene=home_repair&stage=helper_finished&filter=all&n=3&c=20",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/5ecdb411dacbfe4d1dee3a37bd5dd2254b4bb0b9f498eb078aa93519dcb98328.png",
+          "capture_kind": "continuous_action_replay",
+          "image_sha256": "5ecdb411dacbfe4d1dee3a37bd5dd2254b4bb0b9f498eb078aa93519dcb98328",
+          "source": [
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/helper_finished/evaluator/stage_trajectory/assistant_messages/2",
+              "event_seq": 782
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/helper_finished/evaluator/stage_trajectory/tool_calls/2",
+              "event_seq": 783
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/home_repair/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/helper_finished/evaluator/stage_trajectory/tool_results/2",
+              "event_seq": 784
+            }
+          ]
+        }
+      ],
+      "data_sha256": "f37403b795f89a859b1dbadb044ca880f13daecb4b1673e743c45d9975f3b053",
+      "outcomes": {
+        "native": {
+          "passed": 6,
+          "total": 6
+        },
+        "claw": {
+          "passed": 3,
+          "total": 6
+        }
+      }
+    },
+    {
+      "id": "airport_coordination",
+      "title": "Airport coordination",
+      "heading": "Keep an airport pickup up to date",
+      "apps": "Flights · Calendar · SMS",
+      "task": "T054",
+      "count": 6,
+      "request": "Create an airport pickup event 30 minutes after MU5501 arrives. If the flight is delayed or changes terminal, update the same event.",
+      "default": 1,
+      "moments": [
+        {
+          "label": "Create the pickup",
+          "caption": "The saved calendar readback shows the initial pickup time and terminal.",
+          "step": 7,
+          "stage": "establish_c55",
+          "href": "demo/#scene=airport_coordination&stage=establish_c55&filter=all&n=6&c=9",
+          "mode": "native",
+          "record": {
+            "title": "机场接人",
+            "subtitle": "Calendar · recorded readback",
+            "rows": [
+              [
+                "Date",
+                "11 July 2027"
+              ],
+              [
+                "Time",
+                "10:30–11:00"
+              ],
+              [
+                "Terminal",
+                "T2"
+              ],
+              [
+                "Version",
+                "1"
+              ]
+            ],
+            "reference": "evt_c0d00ddfb4bda421605005b9dbdf8087",
+            "tool": "search_calendar_event",
+            "call_id": "call_kkjsT96tldq84hFZJn3cw8Rg"
+          },
+          "image": null,
+          "capture_kind": null,
+          "image_sha256": null,
+          "source": [
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/assistant_messages/5",
+              "event_seq": 244
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/tool_calls/13",
+              "event_seq": 245
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/tool_calls/14",
+              "event_seq": 246
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/tool_calls/15",
+              "event_seq": 249
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/tool_results/13",
+              "event_seq": 247
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/tool_results/14",
+              "event_seq": 248
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_c55/evaluator/stage_trajectory/tool_results/15",
+              "event_seq": 250
+            }
+          ]
+        },
+        {
+          "label": "Flight delayed",
+          "caption": "The flight delay is reflected in the same calendar event.",
+          "step": 30,
+          "stage": "inbound_delayed",
+          "href": "demo/#scene=airport_coordination&stage=inbound_delayed&filter=all&n=7&c=0",
+          "mode": "native",
+          "record": {
+            "title": "机场接人",
+            "subtitle": "Calendar · recorded readback",
+            "rows": [
+              [
+                "Date",
+                "11 July 2027"
+              ],
+              [
+                "Time",
+                "12:00–12:30"
+              ],
+              [
+                "Terminal",
+                "T2"
+              ],
+              [
+                "Version",
+                "2"
+              ]
+            ],
+            "reference": "evt_c0d00ddfb4bda421605005b9dbdf8087",
+            "tool": "search_calendar_event",
+            "call_id": "call_TTlPS8eKF8rvw5XJnADUhlu8"
+          },
+          "image": null,
+          "capture_kind": null,
+          "image_sha256": null,
+          "source": [
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/inbound_delayed/evaluator/stage_trajectory/assistant_messages/5",
+              "event_seq": 1110
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/inbound_delayed/evaluator/stage_trajectory/tool_calls/6",
+              "event_seq": 1111
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/inbound_delayed/evaluator/stage_trajectory/tool_results/6",
+              "event_seq": 1112
+            }
+          ]
+        },
+        {
+          "label": "Terminal changed",
+          "caption": "The event now points to T1. Its identity is unchanged across all three readbacks.",
+          "step": 64,
+          "stage": "inbound_terminal_changed",
+          "href": "demo/#scene=airport_coordination&stage=inbound_terminal_changed&filter=all&n=8&c=0",
+          "mode": "native",
+          "record": {
+            "title": "机场接人",
+            "subtitle": "Calendar · recorded readback",
+            "rows": [
+              [
+                "Date",
+                "11 July 2027"
+              ],
+              [
+                "Time",
+                "12:00–12:30"
+              ],
+              [
+                "Terminal",
+                "T1"
+              ],
+              [
+                "Version",
+                "3"
+              ]
+            ],
+            "reference": "evt_c0d00ddfb4bda421605005b9dbdf8087",
+            "tool": "search_calendar_event",
+            "call_id": "call_m8OtZNhWYPU4vxUGfWzLkilA"
+          },
+          "image": null,
+          "capture_kind": null,
+          "image_sha256": null,
+          "source": [
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/inbound_terminal_changed/evaluator/stage_trajectory/assistant_messages/4",
+              "event_seq": 1421
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/inbound_terminal_changed/evaluator/stage_trajectory/tool_calls/5",
+              "event_seq": 1422
+            },
+            {
+              "file": ".agent/audits/v4-repair-rerun-five-20260919T154821Z/scenes/airport_coordination/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/inbound_terminal_changed/evaluator/stage_trajectory/tool_results/5",
+              "event_seq": 1423
+            }
+          ]
+        }
+      ],
+      "data_sha256": "91fe7b691a0fd6e44ed0fba3a4b6faf131cefc868818b250a11cc2eee4e72729",
+      "outcomes": {
+        "native": {
+          "passed": 4,
+          "total": 6
+        },
+        "claw": {
+          "passed": 2,
+          "total": 6
+        }
+      }
+    },
+    {
+      "id": "evening_errands",
+      "title": "Evening orders",
+      "heading": "Update a delivery address",
+      "apps": "Food · Shopping · Wallet · QQ",
+      "task": "T073",
+      "count": 5,
+      "request": "Move tonight’s dinner delivery to the second floor. If it can no longer be changed, tell me and keep the order.",
+      "default": 1,
+      "moments": [
+        {
+          "label": "Edit the delivery",
+          "caption": "The agent opens the delivery-address editor through the GUI.",
+          "step": 19,
+          "stage": "establish_address",
+          "href": "demo/#scene=evening_errands&stage=establish_address&filter=all&n=6&c=8",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/67e3ca5b154429f8397a6b0fa5ac8344f5592cbf2ff25d9d4b829db19a030a48.png",
+          "capture_kind": "verified_prefix_replay",
+          "image_sha256": "67e3ca5b154429f8397a6b0fa5ac8344f5592cbf2ff25d9d4b829db19a030a48",
+          "source": [
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_address/evaluator/stage_trajectory/assistant_messages/5",
+              "event_seq": 184
+            },
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_address/evaluator/stage_trajectory/tool_calls/6",
+              "event_seq": 185
+            },
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_address/evaluator/stage_trajectory/tool_results/7",
+              "event_seq": 186
+            }
+          ]
+        },
+        {
+          "label": "Save the address",
+          "caption": "The order page shows the saved second-floor address.",
+          "step": 21,
+          "stage": "establish_address",
+          "href": "demo/#scene=evening_errands&stage=establish_address&filter=all&n=8&c=9",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/6951e398fd5a70d37b331e54da148502a0aebe0ce3770ebf39dca2520622f27a.png",
+          "capture_kind": "verified_prefix_replay",
+          "image_sha256": "6951e398fd5a70d37b331e54da148502a0aebe0ce3770ebf39dca2520622f27a",
+          "source": [
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_address/evaluator/stage_trajectory/assistant_messages/7",
+              "event_seq": 297
+            },
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_address/evaluator/stage_trajectory/tool_calls/8",
+              "event_seq": 298
+            },
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/establish_address/evaluator/stage_trajectory/tool_results/11",
+              "event_seq": 299
+            }
+          ]
+        },
+        {
+          "label": "A later change",
+          "caption": "Once preparation begins, the agent checks whether a second address change is still possible.",
+          "step": 24,
+          "stage": "address_revised_too_late",
+          "href": "demo/#scene=evening_errands&stage=address_revised_too_late&filter=all&n=1&c=8",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/0903ccb39b3a7e05735b9d54fda535fff2b3be7edb8a1713fd444596fbb11f67.png",
+          "capture_kind": "verified_prefix_replay",
+          "image_sha256": "0903ccb39b3a7e05735b9d54fda535fff2b3be7edb8a1713fd444596fbb11f67",
+          "source": [
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/address_revised_too_late/evaluator/stage_trajectory/assistant_messages/0",
+              "event_seq": 362
+            },
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/address_revised_too_late/evaluator/stage_trajectory/tool_calls/0",
+              "event_seq": 363
+            },
+            {
+              "file": ".agent/audits/v4-frozen-continuation-20260919T093159Z/scenes/evening_errands/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/address_revised_too_late/evaluator/stage_trajectory/tool_results/0",
+              "event_seq": 364
+            }
+          ]
+        }
+      ],
+      "data_sha256": "08bdab10398ef279ff15d4f4bc14cfadcb5c4245acbd97472ea12880ca5e4be6",
+      "outcomes": {
+        "native": {
+          "passed": 3,
+          "total": 5
+        },
+        "claw": {
+          "passed": 0,
+          "total": 5
+        }
+      }
+    },
+    {
+      "id": "cross_district_course",
+      "title": "Course planning",
+      "heading": "Confirm and cancel a class",
+      "apps": "SMS · QQ · Calendar · Notes",
+      "task": "T086–T087",
+      "count": 4,
+      "request": "Wait until the teacher and Li Si agree on the same class. Add it to my calendar and tell Li Si. If it is officially cancelled, update both.",
+      "default": 2,
+      "moments": [
+        {
+          "label": "Both sides confirm",
+          "caption": "After both confirmations, the agent sends the agreed time and place in QQ.",
+          "step": 42,
+          "stage": "joint_b_confirmation",
+          "href": "demo/#scene=cross_district_course&stage=joint_b_confirmation&filter=all&n=7&c=0",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/fd57063d5bf38b742dfb5806f881566d04dc0759dd20cf9297559b8c6ba23c03.png",
+          "capture_kind": "continuous_action_replay",
+          "image_sha256": "fd57063d5bf38b742dfb5806f881566d04dc0759dd20cf9297559b8c6ba23c03",
+          "source": [
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/joint_b_confirmation/evaluator/stage_trajectory/assistant_messages/6",
+              "event_seq": 5262
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/joint_b_confirmation/evaluator/stage_trajectory/tool_calls/12",
+              "event_seq": 5263
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/joint_b_confirmation/evaluator/stage_trajectory/tool_results/12",
+              "event_seq": 5264
+            }
+          ]
+        },
+        {
+          "label": "Class cancelled",
+          "caption": "The calendar tool returns a successful deletion for the class event.",
+          "step": 52,
+          "stage": "official_course_cancelled",
+          "href": "demo/#scene=cross_district_course&stage=official_course_cancelled&filter=all&n=3&c=2",
+          "mode": "native",
+          "record": {
+            "title": "Class cancellation",
+            "subtitle": "Calendar · recorded tool result",
+            "rows": [
+              [
+                "Operation",
+                "cancel_event"
+              ],
+              [
+                "Status",
+                "succeeded"
+              ],
+              [
+                "Readback verified",
+                "true"
+              ]
+            ],
+            "reference": "evt_52fca27a5e8eb8faa3031e9ea3c7dfc8",
+            "tool": "delete_calendar_event",
+            "call_id": "call_CzQvA19HouNxHnOrufPoq1e1"
+          },
+          "image": null,
+          "capture_kind": null,
+          "image_sha256": null,
+          "source": [
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/assistant_messages/2",
+              "event_seq": 5582
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/tool_calls/6",
+              "event_seq": 5583
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/tool_calls/7",
+              "event_seq": 5585
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/tool_results/6",
+              "event_seq": 5584
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/tool_results/7",
+              "event_seq": 5586
+            }
+          ]
+        },
+        {
+          "label": "Tell the companion",
+          "caption": "The agent sends the cancellation in QQ, preserving the earlier messages.",
+          "step": 56,
+          "stage": "official_course_cancelled",
+          "href": "demo/#scene=cross_district_course&stage=official_course_cancelled&filter=all&n=7&c=10",
+          "mode": "gui",
+          "record": null,
+          "image": "assets/402f6f89f77bac8909ea069e64903169577bfb18b41353b9496d2f6ac4d17bf8.png",
+          "capture_kind": "continuous_action_replay",
+          "image_sha256": "402f6f89f77bac8909ea069e64903169577bfb18b41353b9496d2f6ac4d17bf8",
+          "source": [
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/assistant_messages/6",
+              "event_seq": 5717
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/tool_calls/12",
+              "event_seq": 5718
+            },
+            {
+              "file": ".agent/audits/v4-course-world-repair-20260919T105908Z/scenes/cross_district_course/report.json",
+              "pointer": "/evidence/evaluator_only_stage_snapshots/official_course_cancelled/evaluator/stage_trajectory/tool_results/12",
+              "event_seq": 5719
+            }
+          ]
+        }
+      ],
+      "data_sha256": "147cab03e11dd9a2e4fb0fef8d48594fd6f29cd18ec561d586dbc91b5172214c",
+      "outcomes": {
+        "native": {
+          "passed": 3,
+          "total": 4
+        },
+        "claw": {
+          "passed": 1,
+          "total": 4
+        }
+      }
+    }
+  ]
+}
