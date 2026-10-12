@@ -318,11 +318,16 @@ function actionCard(action, results) {
 }
 function visibleToolCall(action, results) {
   const call = Observations.toolCall(action, results), card = el('section', 'tool-call');
-  const name = el('code', 'tool-name', call.name.replace(/_[a-f0-9]{8}$/, '')); name.title = call.name;
+  const name = el('code', 'tool-name', action.name === 'skill' ? '读取操作说明' : call.name.replace(/_[a-f0-9]{8}$/, '')); name.title = call.name;
   card.append(name);
   const labels = {device_id:'设备',action:'操作',parameters_json:'参数',package_name:'应用',source:'来源',event_type:'事件',filter:'条件',status:'状态',title:'委托',query:'查询',device_type:'类型',room:'房间',question:'问题'};
   for (const [key,value] of call.parameters) {
     if (['task_id','monitor_id','session_id'].includes(key)) continue;
+    if (action.name === 'skill' && key === 'name') {
+      const titles = {'smart-home':'智能家居','task-management':'任务管理','event-monitoring':'事件监听'};
+      card.append(el('div', 'tool-argument', titles[value] ? `${titles[value]}（${value}）` : String(value)));
+      continue;
+    }
     const text = pretty(value);
     card.append(el('div','tool-argument',`${labels[key] || key}：${text.length > 240 ? text.slice(0,240) + '…' : text}`));
   }

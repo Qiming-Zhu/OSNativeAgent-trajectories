@@ -4085,7 +4085,7 @@
     },
     {
       "path": "app.js",
-      "sha256": "14d4bcea21e86ee51e05f2ad05179f2013f00bcbde5a8535cc03d487f2c31367"
+      "sha256": "15b490a3c394ba7e2f221ba2bc64a52a967ec6b3bc3fcffe3472109670e3a0a4"
     },
     {
       "path": "assets/figures/demo-airport_coordination.png",
@@ -4189,7 +4189,7 @@
     },
     {
       "path": "observations.js",
-      "sha256": "7534910764bb2b7423590e82ee36845af322692b864e75e368bb5463fa80e05a"
+      "sha256": "ea1e5bae555cc2329655c8f7ead32f1a7e9566e744da6f91098f6c6d43c628cb"
     },
     {
       "path": "stories.js",

@@ -90,12 +90,18 @@ const Observations = (() => {
     return lines.join("\n");
   }
   function toolCall(action, results) {
-    const result = parse(results?.find(r => r.call_id === action.call_id)?.text);
+    const record = results?.find(r => r.call_id === action.call_id);
+    const result = parse(record?.text);
     const args = action.arguments || {};
     const parameters = Object.entries(args).filter(([k]) => !['markdown','summary','expected_version','expected_revision','task_ids'].includes(k));
     const code = one(result?.data?.code ?? result?.data?.details?.code);
     const rows = Array.isArray(result?.data?.data) ? result.data.data : [];
-    let outcome = result ? `返回：${result.status || '已收到'}` : '没有关联的返回记录';
+    // A text response (including skill instructions) is still a recorded return.
+    let outcome = !record ? '没有关联的返回记录' : record.text?.trim() ? '已收到工具返回' : '返回内容为空';
+    if (result?.status) outcome = `返回：${result.status}`;
+    if (action.name === 'skill' && typeof args.name === 'string' &&
+        record?.text?.trim().startsWith(`<skill_content name="${args.name}">`) &&
+        record.text.trim().endsWith('</skill_content>')) outcome = '操作说明已加载';
     if (result?.status === 'success') {
       if (code !== undefined && code !== 0) outcome = `App 返回错误 ${code}：${one(result.data.message) || ''}`;
       else if (rows.some(r => one(r.success) === false)) outcome = `App 未执行：${one(rows.find(r => one(r.success) === false).reason) || '未提供原因'}`;
