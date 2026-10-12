@@ -195,7 +195,17 @@ function renderVisual(key, step) {
   const lane = state.data.lanes[key];
   const outsideCapture = lane.capture_available_through_step !== undefined &&
     (step?.index || past.at(-1)?.index || 0) > lane.capture_available_through_step;
-  const lastImage = outsideCapture ? null : past.findLast(s => s.image) || lane.initial_image;
+  const current = step || past.at(-1);
+  const available = frame => {
+    if (!frame?.image) return false;
+    if (frame.image_capture_kind !== 'archived_observation') return true;
+    const origin = frame.image_observation_source;
+    if (!origin || !Number.isFinite(origin.seq)) return false;
+    // Some archived exports attach the first observation to earlier inputs.
+    // Do not show a future observation before it exists in the recorded trace.
+    return current?.source?.some(source => source.file === origin.file && source.seq >= origin.seq);
+  };
+  const lastImage = outsideCapture ? null : past.findLast(available) || (available(lane.initial_image) ? lane.initial_image : null);
   const visual = el("section", "visual-stage");
   const mode = Observations.mode(step);
   visual.append(el('p', 'capture-label', key === 'native' && mode !== 'gui' ? '前台画面 · 原生操作无需切换页面' : '手机画面'));
@@ -207,19 +217,24 @@ function renderVisual(key, step) {
     visual.dataset.captureKind = lastImage.image_capture_kind || "archived";
     visual.dataset.retained = String(retained);
     const captureNames = {continuous_action_replay: '保存动作回放采集', archived_after_action: '原运行 · 动作后截图', archived_observation: '原运行 · 最近观察', verified_prefix_replay: '保存动作回放补采', verified_action_replay: '保存动作回放采集'};
-    visual.append(el('p', 'capture-source', `${captureNames[lastImage.image_capture_kind] || '保存的手机截图'} · Step ${lastImage.index}${retained ? ' · 沿用最近画面' : ''}`));
+    const origin = lastImage.image_capture_kind === 'archived_observation' ? `观察记录 ${lastImage.image_observation_source.seq}` : `Step ${lastImage.index}`;
+    visual.append(el('p', 'capture-source', `${captureNames[lastImage.image_capture_kind] || '保存的手机截图'} · ${origin}${retained ? ' · 沿用最近画面' : ''}`));
   } else {
     visual.append(el("p", "capture-pending", outsideCapture ? "此步骤没有核对通过的补采截图。下方为原运行记录的界面文字。" : "此步骤没有手机截图；动作与状态以原运行记录为准。"));
     if (mode === 'gui') {
       const texts = new Set();
+      let recovery = false;
       for (const action of step?.actions || []) {
         if (!action.name.startsWith('gui_')) continue;
         let result; try { result = JSON.parse(step.results?.find(r => r.call_id === action.call_id)?.text); } catch { continue; }
-        for (const item of result?.data?.nodes || []) if (item.text) texts.add(item.text);
+        const recovered = result?.data?.recovery_observation;
+        const nodes = result?.data?.nodes || (recovered?.status === 'success' ? recovered.data?.nodes : []) || [];
+        if (!result?.data?.nodes && recovered?.status === 'success') recovery = true;
+        for (const item of nodes) if (item.text) texts.add(item.text);
       }
       if (texts.size) {
         const transcript = el('div', 'screen-transcript');
-        transcript.append(el('h5', '', '原运行界面文字'));
+        transcript.append(el('h5', '', recovery ? '操作失败后重新观察的界面文字' : '原运行界面文字'));
         for (const text of texts) transcript.append(el('p', '', text));
         visual.append(transcript);
       } else if (outsideCapture) visual.lastChild.textContent = '此步骤没有核对通过的补采截图；原运行的动作与返回仍可查看。';
@@ -277,15 +292,22 @@ function renderReadback(step) {
     const block = el('div', 'recorded-record');
     block.append(el('code', 'readback-name', record.name));
     const data = record.data;
-    if (record.name === 'search_calendar_event' && data.events) {
+    if (record.name === 'search_calendar_event' && data?.events) {
       const events = Array.isArray(data.events) ? data.events : [data.events];
+      if (!events.length) block.append(el('p', 'readback-empty', '未找到匹配的日历事件'));
       for (const event of events) {
         const card = el('div', 'calendar-readback');
-        card.append(el('strong', '', event.title));
-        const format = stamp => new Intl.DateTimeFormat('zh-CN', {timeZone: event.time_zone || 'Asia/Shanghai', month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(stamp));
+        card.append(el('strong', '', event.title || '未记录标题'));
+        const format = stamp => {
+          if (stamp == null || stamp === '') return '未记录';
+          const date = new Date(stamp);
+          if (!Number.isFinite(date.getTime())) return String(stamp);
+          try { return new Intl.DateTimeFormat('zh-CN', {timeZone: event.time_zone || 'Asia/Shanghai', month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(date); }
+          catch { return `${stamp}（${event.time_zone}）`; }
+        };
         const location = typeof event.location === 'object' ? event.location?.location : event.location;
         for (const [label,value] of [['开始',format(event.start_time)],['结束',format(event.end_time)],['地点',location],['状态',event.status],['版本',event.resource_version]]) {
-          const row = el('div', 'calendar-field'); row.append(el('span','',label),el('b','',String(value))); card.append(row);
+          const row = el('div', 'calendar-field'); row.append(el('span','',label),el('b','',value == null || value === '' ? '未记录' : String(value))); card.append(row);
         }
         card.append(el('small', 'calendar-record-id', event.event_id)); block.append(card);
       }
@@ -293,11 +315,13 @@ function renderReadback(step) {
     }
     const entries = data && !Array.isArray(data) && typeof data === 'object' ? Object.entries(data) : [['result', data]];
     for (const [key, value] of entries) {
-      if (value === '' || (Array.isArray(value) && !value.length)) continue;
+      if (value === '') continue;
       const row = el('div', 'readback-row');
-      row.append(el('span', 'readback-key', key), el('pre', 'readback-value', pretty(value)));
+      const display = Array.isArray(value) && !value.length ? '无记录（0 条）' : value === null ? '未提供' : pretty(value);
+      row.append(el('span', 'readback-key', key), el('pre', 'readback-value', display));
       block.append(row);
     }
+    if (block.children.length === 1) block.append(el('p', 'readback-empty', '返回内容为空'));
     root.append(block);
   }
   return root;
@@ -318,8 +342,10 @@ function actionCard(action, results) {
 }
 function visibleToolCall(action, results) {
   const call = Observations.toolCall(action, results), card = el('section', 'tool-call');
+  card.dataset.outcome = call.tone;
   const name = el('code', 'tool-name', action.name === 'skill' ? '读取操作说明' : call.name.replace(/_[a-f0-9]{8}$/, '')); name.title = call.name;
   card.append(name);
+  if (call.description) card.append(el('div', 'tool-argument', call.description));
   const labels = {device_id:'设备',action:'操作',parameters_json:'参数',package_name:'应用',source:'来源',event_type:'事件',filter:'条件',status:'状态',title:'委托',query:'查询',device_type:'类型',room:'房间',question:'问题'};
   for (const [key,value] of call.parameters) {
     if (['task_id','monitor_id','session_id'].includes(key)) continue;

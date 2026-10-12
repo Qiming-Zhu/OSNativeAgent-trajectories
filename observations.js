@@ -3,6 +3,17 @@
 const Observations = (() => {
   const one = value => Array.isArray(value) && value.length === 1 ? value[0] : value;
   const parse = value => { try { return JSON.parse(value); } catch { return null; } };
+  function readback(result) {
+    const data = result?.data;
+    if (!data || typeof data !== 'object') return undefined;
+    if (data.details && Object.hasOwn(data.details, 'result')) return data.details.result;
+    if (Object.hasOwn(data, 'data')) return data.data;
+    if (Object.hasOwn(data, 'result_json')) return parse(one(data.result_json));
+    if (data.details?.retErrCode !== undefined) return undefined;
+    const text = (data.content || []).map(item => one(item.text)).filter(value => typeof value === 'string').join('\n');
+    if (text) return {text};
+    return undefined;
+  }
   function collect(steps) {
     const devices = new Map(), monitors = new Map();
     for (const step of steps) {
@@ -46,6 +57,7 @@ const Observations = (() => {
     return {devices: [...devices.values()], monitors: [...monitors.values()]};
   }
   function title(step) {
+    if (step.actions?.length > 1 && step.actions.every(a => a.name === 'skill')) return `读取 ${step.actions.length} 份操作说明`;
     if (step.actions?.length === 1 && step.actions[0].name === 'call_device_tool') {
       const name = step.actions[0].arguments.toolName;
       return ({search_calendar_event:'读取日历记录',create_calendar_event:'创建日历事件',modify_calendar_event:'更新日历事件',delete_calendar_event:'取消日历事件',search_notes:'查询笔记',create_note:'创建笔记',modify_note:'更新笔记',send_message:'发送短信'})[name] || name;
@@ -93,29 +105,58 @@ const Observations = (() => {
     const record = results?.find(r => r.call_id === action.call_id);
     const result = parse(record?.text);
     const args = action.arguments || {};
-    const parameters = Object.entries(args).filter(([k]) => !['markdown','summary','expected_version','expected_revision','task_ids'].includes(k));
-    const code = one(result?.data?.code ?? result?.data?.details?.code);
+    const deviceQuery = /^app_smarthome_get_devices_info_/.test(action.name);
+    const parameters = Object.entries(args).filter(([k,v]) =>
+      !['markdown','summary','expected_version','expected_revision','task_ids'].includes(k) &&
+      !(deviceQuery && ['room','device_type'].includes(k) && v == null));
+    const details = result?.data?.details;
+    const code = one(result?.data?.code ?? details?.code ?? details?.retErrCode);
     const rows = Array.isArray(result?.data?.data) ? result.data.data : [];
+    const business = readback(result);
+    const name = action.name === 'call_device_tool' ? args.toolName : action.name;
+    let tone = 'neutral';
     // A text response (including skill instructions) is still a recorded return.
     let outcome = !record ? '没有关联的返回记录' : record.text?.trim() ? '已收到工具返回' : '返回内容为空';
-    if (result?.status) outcome = `返回：${result.status}`;
+    if (result?.status) {
+      const labels = {denied:'操作被拒绝',stale_observation:'界面已变化，操作未执行',error:'工具返回错误',failed:'操作未完成',rejected:'操作被拒绝'};
+      outcome = labels[result.status] || `返回：${result.status}`;
+      if (labels[result.status]) {
+        tone = 'error';
+        const reason = result.error?.message || result.error?.code;
+        if (reason) outcome += `：${reason}`;
+      }
+    }
     if (action.name === 'skill' && typeof args.name === 'string' &&
         record?.text?.trim().startsWith(`<skill_content name="${args.name}">`) &&
         record.text.trim().endsWith('</skill_content>')) outcome = '操作说明已加载';
     if (result?.status === 'success') {
-      if (code !== undefined && code !== 0) outcome = `App 返回错误 ${code}：${one(result.data.message) || ''}`;
+      tone = 'success';
+      // TicketBooking's recorded AppFunction contract uses 200; other recorded
+      // App/system envelopes use 0. Entity status fields are not call statuses.
+      const successCode = action.name.startsWith('app_ticketbooking_') ? 200 : 0;
+      if (name === 'search_notes' && String(code) === '-101' && details?.errMsg === 'no data') {
+        outcome = '未找到匹配的笔记'; tone = 'empty';
+      }
+      else if (code !== undefined && Number(code) !== successCode) {
+        const message = one(result.data?.message ?? details?.errMsg);
+        outcome = `App 返回错误 ${code}${message ? `：${message}` : ''}`; tone = 'error';
+      }
       else if (rows.some(r => one(r.success) === false)) outcome = `App 未执行：${one(rows.find(r => one(r.success) === false).reason) || '未提供原因'}`;
       else if (rows.some(r => one(r.success) === true)) outcome = 'App 确认执行成功';
-      else if (rows.length && rows.every(r => Number.isInteger(one(r.count)))) outcome = `返回 ${rows.reduce((n,r) => n + one(r.count),0)} 条记录`;
+      else if (rows.length && rows.every(r => Number.isInteger(one(r.count)))) outcome = `返回 ${rows.reduce((n,r) => n + one(r.count),0)} ${deviceQuery ? '台设备' : '条记录'}`;
+      else if (Number.isInteger(one(business?.count))) outcome = `返回 ${one(business.count)} 条记录`;
+      else if (Array.isArray(business?.items)) outcome = `返回 ${business.items.length} 条记录`;
       else if (action.name === 'os_monitor_register') outcome = result.data?.enabled ? '监听已注册并启用' : '监听已注册，未启用';
-      else if (action.name === 'os_task_create' || action.name === 'os_task_update') outcome = `委托状态：${({active:'进行中',completed:'已完成',cancelled:'已取消'})[result.data?.status] || result.data?.status || '已保存'}`;
+      else if (action.name === 'os_task_create' || action.name === 'os_task_update') outcome = `委托状态：${({active:'进行中',waiting:'等待后续',completed:'已完成',cancelled:'已取消'})[result.data?.status] || result.data?.status || '已保存'}`;
       else if (action.name === 'os_monitor_remove') outcome = result.data?.removed === true ? '监听已撤销' : '返回成功，未确认撤销';
       else outcome = '工具返回成功';
+      if (rows.some(r => one(r.success) === false)) tone = 'error';
+      if (business && ['failed', 'error', 'rejected'].includes(one(business.status))) {
+        outcome = `操作未完成：${one(business.error) || one(business.status)}`; tone = 'error';
+      }
     }
-    const business = result?.data?.details?.result;
-    if (business && ['failed', 'error', 'rejected'].includes(one(business.status))) outcome = `操作未完成：${one(business.error) || one(business.status)}`;
-    return {name: action.name === 'call_device_tool' ? args.toolName : action.name,
-      parameters: action.name === 'call_device_tool' ? Object.entries(args.arguments || {}) : parameters, outcome};
+    return {name, description: deviceQuery && !args.room && !args.device_type ? '查询全部设备' : '',
+      parameters: action.name === 'call_device_tool' ? Object.entries(args.arguments || {}) : parameters, outcome, tone};
   }
   function mode(step) {
     if (step?.kind === 'gui' || step?.actions?.some(a => a.name.startsWith('gui_') || a.name === 'system_app_open')) return 'gui';
@@ -128,8 +169,8 @@ const Observations = (() => {
       if (!action.name.startsWith('app_') && action.name !== 'call_device_tool') continue;
       const result = parse(step.results?.find(r => r.call_id === action.call_id)?.text);
       if (!result) continue;
-      const data = result.data?.details?.result ?? result.data?.data;
-      if (!data) continue;
+      const data = readback(result);
+      if (data === undefined) continue;
       const unwrap = value => Array.isArray(value) ? (value.length === 1 ? unwrap(value[0]) : value.map(unwrap)) :
         value && typeof value === 'object' ? Object.fromEntries(Object.entries(value).map(([k,v]) => [k, unwrap(v)])) : value;
       collected.push({name: action.arguments?.toolName || action.name.replace(/_[a-f0-9]{8}$/, ''), data: unwrap(data)});

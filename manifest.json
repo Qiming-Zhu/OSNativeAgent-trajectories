@@ -4085,7 +4085,7 @@
     },
     {
       "path": "app.js",
-      "sha256": "15b490a3c394ba7e2f221ba2bc64a52a967ec6b3bc3fcffe3472109670e3a0a4"
+      "sha256": "644a3b0b09af52bb4768ae756fd1985e9ad7dea0414cadc5c78892ca38041e34"
     },
     {
       "path": "assets/figures/demo-airport_coordination.png",
@@ -4161,7 +4161,7 @@
     },
     {
       "path": "demo/index.html",
-      "sha256": "e640d0bcb2fd805c55c366a42426318b3fc935677c66e3ca8bd29c9db7887eef"
+      "sha256": "f9377b919c151168618ec9131bef7408326f244c6eca8108d7459e367fdb4d0d"
     },
     {
       "path": "fonts/OFL.txt",
@@ -4169,15 +4169,15 @@
     },
     {
       "path": "fonts/source.json",
-      "sha256": "4fce041f63173896a52168a211c1e30aaf65bd479241b0b9dfd340104d83950b"
+      "sha256": "0ce3533ce1901b82642c6019cd39a999cf2f96bc0db413a680d7c55f82c36330"
     },
     {
       "path": "fonts/trajectory-sans.ttf",
-      "sha256": "3c60f743d5ff77c9e4fb89244f45a5d5b91021e2d653396f9075f3f604f56f7e"
+      "sha256": "007af62b9d12c5d7c09aaacac469be4c9c45fd727ca55c789f766fdbd91100c3"
     },
     {
       "path": "home.css",
-      "sha256": "f0c78ce6b3fec0691f564690aa5ca56abecedf64645b17aaa9d9e72ddacf7920"
+      "sha256": "a52acaabe112b0ef87856e69e67a0f0141ab25c559eff17de7b68b3b78704bcd"
     },
     {
       "path": "home.js",
@@ -4185,11 +4185,11 @@
     },
     {
       "path": "index.html",
-      "sha256": "d090b144a6dd031cec9599fa4acdc4268dbf2032b0dd1598372805ea3f1a51c5"
+      "sha256": "d844a70cb91da429105e20b9c7ee5fbd20dde496fa1a86dd92d6a121f87efc88"
     },
     {
       "path": "observations.js",
-      "sha256": "ea1e5bae555cc2329655c8f7ead32f1a7e9566e744da6f91098f6c6d43c628cb"
+      "sha256": "6596d0fa6636401279a7d7b2534dfa8d40d48ad7f193df8548847bc9c83c6924"
     },
     {
       "path": "stories.js",
@@ -4197,7 +4197,7 @@
     },
     {
       "path": "style.css",
-      "sha256": "6d9c2da7383396cd2afe89bce3f1ffe6a3ddaec1f18f73c53d0737db2f3b50ea"
+      "sha256": "027459d43aaed84db92d38f466ce8cf03ce271ce85bb8442d7267a4023a41e52"
     }
   ],
   "site_build": {

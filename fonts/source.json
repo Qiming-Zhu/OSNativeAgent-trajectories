@@ -4,6 +4,6 @@
   "source_sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
   "license": "SIL OFL 1.1",
   "derivation": "fontTools subset of UI and decoded observations from four GPT-5.4 traces; renamed Trajectory Sans",
-  "characters": 1115,
-  "output_sha256": "3c60f743d5ff77c9e4fb89244f45a5d5b91021e2d653396f9075f3f604f56f7e"
+  "characters": 1112,
+  "output_sha256": "007af62b9d12c5d7c09aaacac469be4c9c45fd727ca55c789f766fdbd91100c3"
 }

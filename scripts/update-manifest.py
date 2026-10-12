@@ -2,6 +2,7 @@
 """Refresh static presentation hashes while preserving trajectory provenance."""
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,6 +10,31 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def version_assets():
+    # HTML and CSS may outlive a deployment in browser/CDN caches. A changed
+    # asset gets a different URL, including the subset font referenced by CSS.
+    for name in ('home.css', 'style.css'):
+        path = ROOT / name
+        def css_url(match):
+            asset = match[2].split('?', 1)[0]
+            target = ROOT / asset
+            if not target.is_file():
+                return match[0]
+            return f'url({match[1]}{asset}?v={sha(target)[:12]}{match[1]})'
+        text = re.sub(r'''url\((["'])([^"']+)\1\)''', css_url, path.read_text())
+        path.write_text(text)
+    for name in ('index.html', 'demo/index.html'):
+        path = ROOT / name
+        def html_asset(match):
+            asset = match[2].split('?', 1)[0]
+            target = ROOT / asset  # demo uses <base href="../">
+            if not target.is_file():
+                return match[0]
+            return f'{match[1]}{asset}?v={sha(target)[:12]}{match[3]}'
+        text = re.sub(r'((?:src|href)=")([^"?]+\.(?:js|css)(?:\?[^" ]*)?)(")', html_asset, path.read_text())
+        path.write_text(text)
 
 
 def main():
@@ -33,6 +59,7 @@ def main():
         data = json.loads((ROOT / 'data' / (item['id'] + '.json')).read_text())
         if any(data[key] != item[key] for key in item):
             raise ValueError('Catalog metadata does not match its trajectory')
+    version_assets()
     manifest['images'] = list({item['sha256']:item for item in manifest['images'] + extra['images']}.values())
     paths = [ROOT / name for name in (
         '.nojekyll', 'index.html', 'home.css', 'home.js', 'demo/index.html',
