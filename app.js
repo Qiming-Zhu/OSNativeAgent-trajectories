@@ -196,29 +196,45 @@ function renderVisual(key, step) {
   const outsideCapture = lane.capture_available_through_step !== undefined &&
     (step?.index || past.at(-1)?.index || 0) > lane.capture_available_through_step;
   const current = step || past.at(-1);
+  // In these exports, get_device_screen and its immediate observation are one
+  // displayed step. Compare the completed call, not just its request record.
+  const capturedByStep = frame => frame?.title === 'agent.get_device_screen' &&
+    frame.image_capture_kind === 'archived_observation' && frame.source?.some(source =>
+      source.file === frame.image_observation_source?.file && source.seq + 1 === frame.image_observation_source.seq);
   const available = frame => {
     if (!frame?.image) return false;
     if (frame.image_capture_kind !== 'archived_observation') return true;
     const origin = frame.image_observation_source;
     if (!origin || !Number.isFinite(origin.seq)) return false;
-    // Some archived exports attach the first observation to earlier inputs.
-    // Do not show a future observation before it exists in the recorded trace.
-    return current?.source?.some(source => source.file === origin.file && source.seq >= origin.seq);
+    return (capturedByStep(frame) && frame.index <= current?.index) ||
+      current?.source?.some(source => source.file === origin.file && source.seq >= origin.seq);
   };
-  const lastImage = outsideCapture ? null : past.findLast(available) || (available(lane.initial_image) ? lane.initial_image : null);
+  let lastImage = outsideCapture ? null : past.findLast(available) || (available(lane.initial_image) ? lane.initial_image : null);
+  let openingPreview = false;
+  if (!lastImage && key === 'claw' && !outsideCapture && current) {
+    const firstRead = all.find(capturedByStep);
+    if (firstRead?.image && current.index < firstRead.index &&
+        all.filter(s => s.index < firstRead.index).every(s => s.kind !== 'gui')) {
+      lastImage = firstRead; openingPreview = true;
+    }
+  }
   const visual = el("section", "visual-stage");
   const mode = Observations.mode(step);
-  visual.append(el('p', 'capture-label', key === 'native' && mode !== 'gui' ? '前台画面 · 原生操作无需切换页面' : '手机画面'));
+  visual.append(el('p', 'capture-label', openingPreview ? '开场画面预览' : key === 'native' && mode !== 'gui' ? '前台画面 · 原生操作无需切换页面' : '手机画面'));
   if (lastImage) {
-    const retained = lastImage !== step;
-    const shown = retained ? {...lastImage, point: null} : lastImage;
+    const retained = !openingPreview && lastImage !== step;
+    const shown = retained || openingPreview ? {...lastImage, point: null} : lastImage;
     visual.append(renderImage(shown));
     visual.dataset.imageStep = String(lastImage.index);
     visual.dataset.captureKind = lastImage.image_capture_kind || "archived";
     visual.dataset.retained = String(retained);
+    visual.dataset.preview = String(openingPreview);
     const captureNames = {continuous_action_replay: '保存动作回放采集', archived_after_action: '原运行 · 动作后截图', archived_observation: '原运行 · 最近观察', verified_prefix_replay: '保存动作回放补采', verified_action_replay: '保存动作回放采集'};
     const origin = lastImage.image_capture_kind === 'archived_observation' ? `观察记录 ${lastImage.image_observation_source.seq}` : `Step ${lastImage.index}`;
-    visual.append(el('p', 'capture-source', `${captureNames[lastImage.image_capture_kind] || '保存的手机截图'} · ${origin}${retained ? ' · 沿用最近画面' : ''}`));
+    const caption = openingPreview ? `原运行首张截图 · Step ${lastImage.index} 读取` :
+      lastImage === step && capturedByStep(lastImage) ? `原运行 · 本步读取的截图 · Step ${lastImage.index}` :
+      `${captureNames[lastImage.image_capture_kind] || '保存的手机截图'} · ${origin}${retained ? ' · 沿用最近画面' : ''}`;
+    visual.append(el('p', 'capture-source', caption));
   } else {
     visual.append(el("p", "capture-pending", outsideCapture ? "此步骤没有核对通过的补采截图。下方为原运行记录的界面文字。" : "此步骤没有手机截图；动作与状态以原运行记录为准。"));
     if (mode === 'gui') {

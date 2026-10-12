@@ -4085,7 +4085,7 @@
     },
     {
       "path": "app.js",
-      "sha256": "644a3b0b09af52bb4768ae756fd1985e9ad7dea0414cadc5c78892ca38041e34"
+      "sha256": "8df0be28341c9352c14dc4c63e12bbe49a7a78ebe819789648393170e84008d8"
     },
     {
       "path": "assets/figures/demo-airport_coordination.png",
@@ -4161,7 +4161,7 @@
     },
     {
       "path": "demo/index.html",
-      "sha256": "f9377b919c151168618ec9131bef7408326f244c6eca8108d7459e367fdb4d0d"
+      "sha256": "93d3b623f6301162bd56fdfd29dccfc39c9f58a3dc88d94ded7169e5c06bca2f"
     },
     {
       "path": "fonts/OFL.txt",

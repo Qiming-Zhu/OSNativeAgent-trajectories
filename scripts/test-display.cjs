@@ -28,13 +28,16 @@ for (const file of ['index.html','demo/index.html']) {
     assert.deepEqual(await page.locator('#native .tool-outcome').allTextContents(), Array(3).fill('操作说明已加载'));
     assert.equal(await page.locator('#native .step-title').textContent(),'读取 3 份操作说明');
     assert.match(await page.locator('#native .tool-call').first().textContent(), /智能家居（smart-home）/);
-    assert.equal(await page.locator('#claw .screen-wrap img').count(),0,'Do not show the first future observation at the opening input');
+    assert.equal(await page.locator('#claw .screen-wrap img').count(),1,'Opening inputs retain a clearly labelled first-observation preview');
+    assert.equal(await page.locator('#claw .visual-stage').getAttribute('data-preview'),'true');
+    assert.match(await page.locator('#claw .capture-label').textContent(), /开场画面预览/);
+    assert.match(await page.locator('#claw .capture-source').textContent(), /Step 7 读取/);
     await page.locator('#native .raw-step > summary').click();
     await page.locator('#native .action-card').first().getByText('工具返回',{exact:true}).click();
     assert.match(await page.locator('#native .action-card').first().textContent(), /<skill_content name="smart-home">/);
 
     const checks = await page.evaluate(async () => {
-      let steps = 0, calls = 0, skills = 0, tasks = 0, guides = 0;
+      let steps = 0, calls = 0, skills = 0, tasks = 0, guides = 0, clawScreens = 0, screenReads = 0, openingPreviews = 0;
       const problems = [];
       for (const {id} of state.catalog) {
         await loadCase(id);
@@ -54,6 +57,21 @@ for (const file of ['index.html','demo/index.html']) {
               if (key === 'native') {
                 calls += lane.querySelectorAll('.tool-call').length;
                 skills += [...lane.querySelectorAll('.tool-outcome')].filter(n => n.textContent === '操作说明已加载').length;
+              } else {
+                const frame = lane.querySelector('.visual-stage'), image = frame.querySelector('img');
+                if (!image) problems.push(`${id}/claw/${list[i].index}: screenshot disappeared`);
+                else clawScreens++;
+                const firstRead = state.data.lanes.claw.steps.find(s => s.title === 'agent.get_device_screen');
+                const preview = list[i].index < firstRead.index;
+                if ((frame.dataset.preview === 'true') !== preview) problems.push(`${id}/claw/${list[i].index}: preview label mismatch`);
+                if (preview) {
+                  if (frame.dataset.retained !== 'false' || !frame.querySelector('.capture-source').textContent.includes(`Step ${firstRead.index} 读取`)) problems.push(`${id}/claw/${list[i].index}: misleading opening caption`);
+                  openingPreviews++;
+                }
+                if (list[i].title === 'agent.get_device_screen') {
+                  if (image?.getAttribute('src') !== list[i].image || frame.dataset.imageStep !== String(list[i].index) || !frame.querySelector('.capture-source').textContent.includes('本步读取')) problems.push(`${id}/claw/${list[i].index}: screenshot return not paired with its call`);
+                  screenReads++;
+                }
               }
               for (const record of lane.querySelectorAll('.recorded-record')) if (record.children.length < 2) problems.push(`${id}/${key}/${list[i].index}: empty readback`);
               steps++;
@@ -73,11 +91,12 @@ for (const file of ['index.html','demo/index.html']) {
           guides++;
         }
       }
-      return {steps,calls,skills,tasks,guides,problems};
+      return {steps,calls,skills,tasks,guides,clawScreens,screenReads,openingPreviews,problems};
     });
     assert.deepEqual(checks.problems,[]);
     assert.equal(checks.steps,1521); assert.equal(checks.calls,418); assert.equal(checks.skills,51);
     assert.equal(checks.tasks,21); assert.equal(checks.guides,14);
+    assert.equal(checks.clawScreens,1101); assert.equal(checks.screenReads,58); assert.equal(checks.openingPreviews,18);
 
     async function show(id, index) {
       await page.evaluate(async ({id,index}) => {
