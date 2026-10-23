@@ -24,7 +24,7 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header"><div class="wrap header-inner">
     <a class="wordmark" href="./"><span class="mark" aria-hidden="true">Ⅱ</span> OS-native</a>
-    <nav aria-label="Main navigation"><a class="nav-why" href="#why">Why</a><a href="#demo">Demo</a><a class="nav-framework" href="#framework">Framework</a><a href="#results">Results</a><a class="code-link nav-code" href="https://github.com/FreedomIntelligence/OSNativeAgent">Code ↗</a></nav>
+    <nav aria-label="Main navigation"><a class="nav-why" href="#why">Why</a><a href="#demo">Demo</a><a class="nav-framework" href="#framework">Method</a><a href="#results">Results</a><a class="code-link nav-code" href="https://github.com/FreedomIntelligence/OSNativeAgent">Code ↗</a></nav>
   </div></header>
   <main id="main" class="wrap">
     <section class="hero" aria-labelledby="title">
@@ -95,7 +95,7 @@
     </section>
 
     <section id="framework" class="section" aria-labelledby="framework-title">
-      <h2 id="framework-title">OS-native framework</h2>
+      <h2 id="framework-title">OS-native agents</h2>
       <p class="section-intro">The OS provides native state, capabilities, and trust, but serves one call at a time. Our harness keeps each delegation as a task, wakes it when a change matters, and acts within the authorization granted to it. State observation and permission checks run on the device without the model, so the model is invoked only when a task needs a decision.</p>
       <figure class="figure"><a href="assets/figures/os-native-framework-v2.png"><img src="assets/figures/os-native-framework-v2.png" alt="OS-native agent framework: monitors assess events and resume the affected task; tasks, agent loop, skills and memory run on native state, native capabilities, and native trust of the Android phone." loading="lazy" width="2400" height="1053"></a><figcaption>Figure 2. Harness components (teal) keep each delegation as a task record and, when a monitored event arrives, assess the waiting tasks and resume the affected one. The native state, capabilities, and trust of the OS (grey) carry every observation and call. Realized on unmodified Android with an extended DeepSeek Harness.</figcaption></figure>
       <p class="harness-note"><strong>Persistent tasks.</strong> A delegation can last for hours and span several conversations. Each one is kept as a task record, separate from the sessions that execute it, holding the goal, constraints, progress, and references to the records it created. A woken task resumes with only what changed, so the user never restates the trip.</p>
