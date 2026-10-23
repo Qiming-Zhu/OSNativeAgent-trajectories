@@ -8,7 +8,7 @@ This repository contains the paper homepage and interactive trajectory demo for 
 - `demo/index.html`: interactive comparison across four GPT-5.4 scenarios.
 - `app.js`, `observations.js`, `style.css`: trajectory viewer.
 - `data/catalog.json`, the four scenario JSON files and `assets/*.png`: recorded trajectories and captured phone screens.
-- `data/dynamicworld-results.json`: Tables 3–5 data, shared with the code repository.
+- `data/dynamicworld-results.json`: Table 3–4 data, shared with the code repository.
 - `assets/figures/`: paper figures and screenshots of the homepage observation panels, shared with the code repository.
 - `data/stories.json`, `data/showcase.json`: selected observations, deep links and screenshot provenance.
 - `data/original-export-manifest.json`, `data/additional-export-manifest.json`: original and additional trajectory export provenance.

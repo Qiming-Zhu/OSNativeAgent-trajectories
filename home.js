@@ -55,7 +55,7 @@ if (new URLSearchParams(location.hash.slice(1)).has('scene')) {
   }).then(data => { results = data; render(selected); }).catch(() => {
     const error = document.querySelector('#result-error');
     error.hidden = false;
-    error.textContent = 'The interactive result data could not load. The GPT-5.4 results and Tables 4–5 remain available below; use the result-data link to inspect the source.';
+    error.textContent = 'The interactive result data could not load. The GPT-5.4 results and Table 4 remain available below; use the result-data link to inspect the source.';
     tabs.forEach(tab => { tab.disabled = true; });
   });
   document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {

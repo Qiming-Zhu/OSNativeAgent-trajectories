@@ -4104,12 +4104,24 @@
       "sha256": "dbff8bef3afa93a417430ea166d3e7fa5e38d20810c85102b9ea09f6da36a0e2"
     },
     {
+      "path": "assets/figures/dynamicworld-benchmark-v2.png",
+      "sha256": "b87066befbb9200877999b93877f98ef682296190c646f9b0e5bfeaeda9b5bfc"
+    },
+    {
       "path": "assets/figures/dynamicworld-benchmark.png",
       "sha256": "4bfb63e0999b79e725cc1195328c0750547758e264c2f3d790e9b2ee8a9dffa2"
     },
     {
+      "path": "assets/figures/os-native-framework-v2.png",
+      "sha256": "869397a41102e933034a47a2abfd11b668583107740ff21647a1fc00c788a655"
+    },
+    {
       "path": "assets/figures/os-native-framework.png",
       "sha256": "59a781851a99a7cf1b3e1443b95dc844235c3649e7304470ed0275c1c98010a8"
+    },
+    {
+      "path": "assets/figures/task-coordination.png",
+      "sha256": "ad931b36680e822e4a1f1ed134939f3e8f0c7c0ab526e306d9632205d5517687"
     },
     {
       "path": "data/additional-export-manifest.json",
@@ -4177,15 +4189,15 @@
     },
     {
       "path": "home.css",
-      "sha256": "a52acaabe112b0ef87856e69e67a0f0141ab25c559eff17de7b68b3b78704bcd"
+      "sha256": "99c70ac1ec47942927ad596ae1dd3cdca4be73e88d45eb591692eb3296e0f3f4"
     },
     {
       "path": "home.js",
-      "sha256": "6d7e4b855949ea9eedec498d1f5931e215d2c3149691b636769ce355d2467bfd"
+      "sha256": "0120a2c2fe25cc15c00e0c95cb1314b307e2e302944e774bae866b5551d7e988"
     },
     {
       "path": "index.html",
-      "sha256": "d844a70cb91da429105e20b9c7ee5fbd20dde496fa1a86dd92d6a121f87efc88"
+      "sha256": "5656b134cb05caed1ced546e0a174ed8e36c0e991b20e2aaaffde37b7d4bfebd"
     },
     {
       "path": "observations.js",
