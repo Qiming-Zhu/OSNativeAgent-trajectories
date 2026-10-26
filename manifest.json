@@ -4181,7 +4181,7 @@
     },
     {
       "path": "demo/index.html",
-      "sha256": "93d3b623f6301162bd56fdfd29dccfc39c9f58a3dc88d94ded7169e5c06bca2f"
+      "sha256": "836678aa4d60a2452f7a809b0a0cf0f51e77e1de4eaba8ff788b144df382a3db"
     },
     {
       "path": "fonts/OFL.txt",
@@ -4197,7 +4197,7 @@
     },
     {
       "path": "home.css",
-      "sha256": "bdc307fd4e775407d6ae486e1ad22a7d86866da582839b7d6c1876f80762abce"
+      "sha256": "dfc66976396dd6287cf564c2eeb09087566750294bd9f32fab1924b3ad1f9ebb"
     },
     {
       "path": "home.js",
@@ -4205,7 +4205,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "919651f221298370cf5b1ccc9905dfff0e3c1e9cf6e62f8c4a5de9f8cad9d695"
+      "sha256": "441732bb102af95d9420cfe240395eb3fae778030624a311be8d99ded3b6cbdc"
     },
     {
       "path": "observations.js",
@@ -4217,7 +4217,7 @@
     },
     {
       "path": "style.css",
-      "sha256": "027459d43aaed84db92d38f466ce8cf03ce271ce85bb8442d7267a4023a41e52"
+      "sha256": "0183907a55e9669a708f2ad1b8ee5ff362fbb0c36f93a60244667b0dc9e864fa"
     }
   ],
   "site_build": {

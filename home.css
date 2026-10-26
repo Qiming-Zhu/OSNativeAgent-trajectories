@@ -183,3 +183,10 @@
 #framework .harness-note{margin-top:28px}
 .intro .claim{margin:14px auto 0;padding:12px 18px;max-width:640px;font-size:17px;line-height:1.6;font-weight:650;color:var(--red);background:var(--red-soft);border-radius:8px}
 @media(max-width:600px){.intro .claim{font-size:15px}.intro .claim br{display:none}}
+
+/* Logo mark and the three kinds of change under the lede. */
+.mark svg{width:25px;height:25px;display:block}
+.intro .changes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;list-style:none;padding:0;margin:14px 0 4px}
+.intro .changes li{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:14px;color:var(--ink)}
+.intro .changes svg{width:16px;height:16px;fill:none;stroke:var(--teal);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:540px){.intro .changes li{font-size:13px;padding:6px 12px}}

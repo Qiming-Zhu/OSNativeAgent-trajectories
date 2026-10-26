@@ -48,3 +48,5 @@ main{max-width:1600px;padding:24px 32px 48px}
 pre,code,.readback-value,.readback-key{font-family:ui-monospace,"Trajectory Sans",monospace}
 .calendar-readback{padding:14px 0 0}.calendar-readback>strong{font-size:19px;font-weight:600;display:block;margin-bottom:16px}.calendar-field{display:flex;justify-content:space-between;align-items:baseline;gap:14px;border-top:1px solid #dfe8e3;padding:11px 0;font-size:12px}.calendar-field>span{color:#728177}.calendar-field>b{font-weight:500;text-align:right}.calendar-record-id{display:block;overflow-wrap:anywhere;font:9px/1.7 ui-monospace,"Trajectory Sans",monospace;color:#7c8c82;margin-top:10px}
 .tool-call[data-outcome="error"]{border-left-color:#b66855;background:#fffaf8}.tool-call[data-outcome="error"] .tool-outcome{color:#964a38}.readback-empty{font-size:12px;line-height:1.7;color:#65746c;margin:10px 0 0}
+
+.brand-icon svg{width:88%;height:88%;display:block}

@@ -14,8 +14,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://qiming-zhu.github.io/OSNativeAgent-trajectories/">
   <title>OS-native Agents · Autonomous Task Management in the Dynamic Mobile World</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23246b5e'/%3E%3Cpath d='M10 12h8v16h-8zm12 0h8v16h-8z' fill='white'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="home.css?v=bdc307fd4e77">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23246b5e'/%3E%3Crect x='12.5' y='7.5' width='15' height='25' rx='3.5' fill='none' stroke='white' stroke-width='2.6'/%3E%3Ccircle cx='20' cy='19' r='3.6' fill='white'/%3E%3Cpath d='M17.5 28h5' stroke='white' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="home.css?v=dfc66976396d">
   <script src="home.js?v=0120a2c2fe25" defer></script>
   <script src="stories.js?v=49a96780d63f" defer></script>
   <noscript><style>.model-tabs,.copy-button{display:none}</style></noscript>
@@ -23,7 +23,7 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header"><div class="wrap header-inner">
-    <a class="wordmark" href="./"><span class="mark" aria-hidden="true">Ⅱ</span> OS-native</a>
+    <a class="wordmark" href="./"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="12.5" y="7.5" width="15" height="25" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="20" cy="19" r="3.6" fill="currentColor"/><path d="M17.5 28h5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span> OS-native</a>
     <nav aria-label="Main navigation"><a class="nav-why" href="#why">Why</a><a href="#demo">Demo</a><a class="nav-framework" href="#framework">Method</a><a href="#results">Results</a><a class="code-link nav-code" href="https://github.com/FreedomIntelligence/OSNativeAgent">Code ↗</a></nav>
   </div></header>
   <main id="main" class="wrap">
@@ -39,9 +39,14 @@
         <a class="button" href="#getting-started">Quick start ↘</a>
       </div>
       <div class="intro">
-        <p class="lede">Once you hand a goal to an agent, the world keeps changing: flights are delayed, prices shift, and plans are revised.</p>
-        <p class="claim">A GUI agent pays for every change in screen navigation,<br>so it falls further behind as changes accumulate.</p>
-        <p>An <strong>OS-native agent</strong> is an agent recognized by the operating system and integrated into its native state, capability, and trust mechanisms. It learns of changes as they happen, operates directly on application records, and acts under device-enforced authorization; its harness connects each change to the delegation it affects.</p>
+        <p class="lede">Once you hand a goal to an agent, the world keeps changing.</p>
+        <ul class="changes" aria-label="Examples of change">
+          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>Flights are delayed</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>Prices shift</li>
+          <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Plans are revised</li>
+        </ul>
+        <p class="claim">A GUI agent pays for every change in screen navigation, <br>so it falls further behind as changes accumulate.</p>
+        <p>An <strong>OS-native agent</strong> is an agent recognized by the operating system and integrated into its native state, capability, and trust mechanisms. It learns of changes as they happen, operates directly on application records, and acts under device-enforced authorization; its harness ties each change to the task it affects.</p>
       </div>
       <div class="stats" aria-label="Key results with GPT-5.4 on DynamicWorld">
         <div class="stat"><strong>76.1<small>%</small> <em>vs 40.9%</em></strong><span>Task success, OS-native vs MobileClaw</span></div>
@@ -96,7 +101,7 @@
 
     <section id="framework" class="section" aria-labelledby="framework-title">
       <h2 id="framework-title">OS-native agents</h2>
-      <p class="section-intro">Each simpler design leaves one requirement unmet. A GUI agent woken by notifications and scheduled checks still navigates screens for every change and every open delegation. Native interfaces without tasks make each call reliable, but nothing resumes the task a change concerns. Leaving authorization to the model lets an unattended agent overstep whenever the model errs. An OS-native agent divides the work: the OS supplies the state, calls, and checks that need no judgment, our harness binds them to the tasks they serve, and the model is invoked only when a task needs a decision.</p>
+      <p class="section-intro">Simpler designs each leave one requirement unmet. A GUI agent woken by notifications still navigates screens for every change. Native interfaces without tasks cannot tell which task a change concerns. Leaving authorization to the model lets an unattended agent overstep. An OS-native agent splits the work: the OS supplies the state, calls, and checks that need no judgment, the harness binds them to tasks, and the model is called only when a task needs a decision.</p>
       <figure class="figure"><a href="assets/figures/os-native-framework-v3.png"><img src="assets/figures/os-native-framework-v3.png" alt="OS-native agent framework with the flight delay traced in five steps: the event reaches the monitors, assessment wakes only the travel task, the resumed session observes the booking and calls to rebook. Observations mask the card number; a payment without the task's grant asks the user." loading="lazy" width="2400" height="1053"></a><figcaption>Figure 2. Harness components (teal) keep each delegation as a task record; the native state, capabilities, and trust of the OS (grey) carry every observation and call. Steps 1–5 trace the flight delay: the event reaches the monitors, assessment wakes only the trip, and its resumed session reads the booking and rebooks it. Two checks guard the path: observations mask private data such as the card number, which the device fills in locally when the payment runs, and a payment without the trip's grant asks the user.</figcaption></figure>
       <p class="harness-note"><strong>Persistent tasks.</strong> A delegation can last for hours and span several conversations. Each one is kept as a task record, separate from the sessions that execute it, holding the goal, constraints, progress, and references to the records it created. A woken task resumes with only what changed, so the user never restates the trip.</p>
       <div class="pairs">
@@ -121,7 +126,7 @@
     </section>
 
     <section id="results" class="section" aria-labelledby="results-title">
-      <div class="section-heading"><h2 id="results-title">Experimental results</h2><p>Task success on DynamicWorld: 88 tasks across 16 scenarios.<br>The same named model supplies all inference within each comparison.</p></div>
+      <div class="section-heading"><h2 id="results-title">Experimental results</h2><p>Task success on DynamicWorld: 88 tasks across 16 scenarios.<br>Within each comparison, one model performs all agent inference.</p></div>
       <div class="results-toolbar"><h3>Task success <span>(%, higher is better)</span></h3><div class="model-tabs" role="tablist" aria-label="Model configuration"><button id="tab-full" role="tab" aria-selected="true" aria-controls="result-panel" data-model="GPT-5.4">GPT-5.4</button><button id="tab-mini" role="tab" aria-selected="false" aria-controls="result-panel" tabindex="-1" data-model="GPT-5.4-mini">GPT-5.4-mini</button></div></div>
       <div id="result-panel" role="tabpanel" aria-labelledby="tab-full">
         <div class="table-wrap score-table-wrap" tabindex="0" role="region" aria-label="Table 3: overall and challenge success rates"><table class="challenge-table"><caption class="visually-hidden">Table 3. Task success by primary challenge. All values are percentages.</caption><thead><tr><th scope="col">Agent system</th><th scope="col" class="overall">Overall<small>88 tasks</small></th><th scope="col" data-challenge="Clarify">Intent clarification<small>8 tasks</small></th><th scope="col" data-challenge="Integrate">Info. integration<small>21 tasks</small></th><th scope="col" data-challenge="Timing">Timely action<small>21 tasks</small></th><th scope="col" data-challenge="Replan">Plan adaptation<small>22 tasks</small></th><th scope="col" data-challenge="Risk">Authorized execution<small>11 tasks</small></th><th scope="col" data-challenge="Basic">Routine execution<small>5 tasks</small></th></tr></thead><tbody id="challenge-rows">
