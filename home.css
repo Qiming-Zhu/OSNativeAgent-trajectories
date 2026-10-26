@@ -156,7 +156,8 @@
 .pair h3{font-size:15px;font-weight:650;margin:0 0 6px}
 .pair .harness h3{color:var(--teal)}
 .pair p{font-size:13.5px;line-height:1.75;color:var(--muted);margin:0}
-.benchmark-details{grid-template-columns:repeat(3,1fr);gap:30px}
+.benchmark-details{grid-template-columns:repeat(4,minmax(0,1fr));gap:26px}
+@media(max-width:1100px) and (min-width:851px){.benchmark-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .benchmark-details h3{font-size:15px;color:var(--ink)}
 .benchmark-details p{font-size:13.5px}
 .event-chart{margin:14px 0 6px}
